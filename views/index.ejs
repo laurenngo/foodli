@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    food<li>
+  </title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="/js/script.js"></script>
+
+</head>
+
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <a class="navbar-brand" href="/">food&ltli&gt </a>
+  <ul class="nav navbar-nav">
+    <li class="active">
+     <!--  <a href="/">Home</a> -->
+    </li>
+    <li>
+      <a href="/mylists">My Lists</a>
+    </li>
+    <li>
+      <a href="/additem">Add Item</a>
+    </li>
+    <li>
+      <a href="/myrecipes">Favorite Recipes</a>
+    </li>
+    <li>
+      <a href="/starlist">Starred Ingredients</a>
+    </li>
+  </ul>
+  <div class="loginDiv">
+    <button class="btn" id="signupBtn" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+    <button class="btn" id="loginBtn" data-toggle="modal" data-target="#loginModal">LogIn</button>
+  </div>
+</nav>
+
+<!-- Sign Up Modal -->
+
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/signup" method="post" class="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">SIGN UP FOR AN ACCOUNT</h4>
+        </div>
+        <div class="modal-body">
+          <!-- ... -->
+          <label class="formLabel">USERNAME</label>
+          <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
+          <label class="formLabel">E-MAIL</label>
+          <input type="text" class="form-control" id="usernameBox" name="email" placeholder="Enter your e-mail here.">
+          <label class="formLabel">PASSWORD</label>
+          <input type="password" class="form-control" id="usernameBox" name="password" placeholder="Enter a password here.">
+        </div>
+        <div class="modal-footer">
+         <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+          <button type="submit" class="btn btn-primary">Sign Up!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <form action="/login" method="post" class="form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">LOG IN TO YOUR ACCOUNT</h4>
+      </div>
+      <div class="modal-body">
+        <!-- ... -->
+        <label class="formLabel">USERNAME</label>
+        <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
+        <label class="formLabel">PASSWORD</label>
+        <input type="password" class="form-control" id="passwordBox" name="password" placeholder="Enter your password here.">
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <button type="submit" class="btn btn-primary">Login!</button>
+      </div>
+     </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<body>
+
+<div class="container">
+  <form class="form" action="/recipes/search" id ="homeSearch" method="GET">
+
+    <div class="form-group">
+
+      <input type="text" class="form-control" id="homeSearchBox" name="q" placeholder="Search for a recipe!">
+    </div>
+
+    <button type="submit" id = "homeSearchButton" class="btn btn-primary">Submit</button>
+  </form>
+
+  <h2>OR</h2>
+
+  <form action="/create" id="createButtonForm" method="">
+    <button type="submit" id = "homeSearchButton" class="btn btn-primary">Create a List!</button>
+  </form>
+</div>
+
+<% include ./partials/footer %>

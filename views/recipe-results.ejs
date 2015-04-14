@@ -1,0 +1,32 @@
+<% include ./partials/header %>
+<div class="container">
+  <h2>Search Results:</h2>
+
+  <div id="searchResultsField">
+    <div>SEARCH RESULTS FOUND: <%= ResultCount %></div>
+
+    <% for (var i=0; i < Results.length; i++){ %>
+
+    <div class="resultDiv">
+      <div class="resultText">
+        <%= Results[i].Title %>
+        <%= Results[i].Cuisine %>
+      </div>
+     <img class="recipeResultsPhoto" src="<%= Results[i].ImageURL %>">
+    </div>
+
+     <% } %>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<% include ./partials/footer %>
