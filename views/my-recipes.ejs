@@ -1,16 +1,19 @@
 <% include ./partials/header %>
 <div class="container">
   <h2>my Recipes</h2>
-</div>
-<div>
-  <% for (i=0; i<favoriteRecipes.length; i++){ %>
-    <div>
-      <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
-    </div>
-    <%= favoriteRecipes[i].recipeName %>
-    <%= favoriteRecipes[i].source %>
 
-  <% } %>
+<div id="favoritesField">
+  <div class="eachFavorite">
+    <% for (i=0; i<favoriteRecipes.length; i++){ %>
+      <div class="eachFavoriteImage">
+        <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
+      </div>
+      <%= favoriteRecipes[i].recipeName %>
+      <%= favoriteRecipes[i].source %>
+
+    <% } %>
+  </div>
 </div>
 
+</div>
 <% include ./partials/footer %>

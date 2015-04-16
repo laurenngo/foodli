@@ -25,27 +25,27 @@
 
   <div class="col-md-6">
 
-    <div id="addItemForm">
-      <div id="addItemHeader">
+    <div class="addItemForm">
+      <div class="addItemHeader">
         <strong>ADD AN ITEM TO YOUR LIST</strong>
       </div>
 
-        <form>
+        <form action="/<%= user.lists[0].id%>/additem" method="POST">
 
         <label class="addFormLabel">ITEM NAME</label>
-        <input type="text" class="form-control addFormBox" id="usernameBox" name="q" placeholder="Enter an item here.">
+        <input type="text" class="form-control addFormBox" id="usernameBox" name="itemName" placeholder="Enter an item here.">
         <label class="addFormLabel">QTY</label>
-        <input type="text" class="form-control addFormBox" id="usernameBox" name="q" placeholder="Enter a qty here.">
+        <input type="text" class="form-control addFormBox" id="usernameBox" name="itemQty" placeholder="Enter a qty here.">
 
         <label class="addFormLabel">UNITS</label>
-        <form>
+
           <select>
-            <option>Gal</option>
-            <option>Oz</option>
-            <option>Cups</option>
-            <option>Tbsp(s)</option>
+            <option name="units" value="Gal">Gal</option>
+            <option name="units" value="Oz">Oz</option>
+            <option name="units" value="Cups">Cups</option>
+            <option name="units" value="Tbsp(s)">Tbsp(s)</option>
           </select>
-        </form>
+
 
         <button class="btn" type="submit">ADD TO LIST!</button>
 
@@ -53,7 +53,20 @@
 
     </div>
 
+
+
+  <div class="addItemForm">
+
+    <div class="addItemHeader">
+      <strong><span class="glyphicon glyphicon-star"></span> FAVORITE ITEMS</strong>
+    </div>
+
+
+
+
+
   </div>
 
+  </div>
 </div>
 <% include ./partials/footer %>

@@ -5,9 +5,8 @@ var request = require("request");
 var db=require("../models");
 
 
-// var bigOvenId=process.env.BIGOVEN_KEY;
+var bigOvenId=process.env.BIGOVEN_KEY;
 
-// Bigoven.set('api_key', process.env.API_KEY)
 
 
 //GET for recipe search
@@ -18,7 +17,7 @@ var url='http://api.bigoven.com/recipes';
 
 var data = {
     pg:1,   //page num
-    api_key: "dvx773rEY13tPhPgc7LF3FzI368FdCVc",
+    api_key: process.env.BIGOVEN_KEY,
     rpp:50,  //request per page
     any_kw:req.query.q
   };
@@ -52,8 +51,8 @@ var data = {
 
 router.get("/:RecipeID", function(req,res){
   var recipeID = req.params.RecipeID
-  var api_key= "dvx773rEY13tPhPgc7LF3FzI368FdCVc";
-  var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+"dvx773rEY13tPhPgc7LF3FzI368FdCVc";
+  var api_key= process.env.BIGOVEN_KEY;
+  var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+api_key;
 
   var recipeData = request(
   {
@@ -86,8 +85,8 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
   if(!user.lists) return res.send('You do not have a list');
 
   var recipeID = req.params.RecipeID
-  var api_key= "dvx773rEY13tPhPgc7LF3FzI368FdCVc";
-  var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+"dvx773rEY13tPhPgc7LF3FzI368FdCVc";
+  var api_key= process.env.BIGOVEN_KEY;
+  var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+api_key;
 
   var recipeData = request(
   {

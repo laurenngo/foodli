@@ -8,11 +8,16 @@ var db=require("../models");
 //Grabs list and creates a new ingredient associated with it
 
 router.post("/:listId/additem", function(req,res){
+
+  var user=req.getUser();
+  console.log("HELLO IM HERE!")
   db.list.find({where:{listId:user.lists.id}}).then(function(foundList){
-    var myList=req.params.listId
-    db.ingredient.create({}).then(function(createdItem){
+    // res.send('FOUNDLIST', foundlist)
+    var myList=user.list.id
+    db.ingredient.create({name:req.body.itemName, quantity:req.body.itemQty, units:req.body.units}).then(function(createdItem){
       foundList.addIngredient(createdItem)
 
+      console.log('CREATEDITEM', createdItem)
       res.redirect("/ingredients/" + myList + "/additem")
     })
   })

@@ -146,7 +146,7 @@ app.get("/list", function(req,res){
 
   db.ingredient.findAll({where:{listId:user.lists[0].id}}).then(function(foundIngredients){
     // res.send(foundIngredients)
-    res.render("list",{ingredient:foundIngredients});
+    res.render("list",{ingredient:foundIngredients, user:user});
 
   })
 
@@ -174,6 +174,6 @@ app.get("/about", function(req,res){
 app.use("/recipes", recipesCtrl);
 app.use("/favorites", favoritesCtrl);
 
-app.listen(3002,function(){
+app.listen(process.env.PORT || 3002,function(){
   console.log("Let's do this thing!")
 })
