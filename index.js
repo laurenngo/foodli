@@ -1,7 +1,8 @@
 var express = require('express');
 var session = require ("express-session");
 var bodyParser = require('body-parser');
-var recipesCtrl = require('./controllers/recipes')
+var recipesCtrl = require('./controllers/recipes');
+var favoritesCtrl = require('./controllers/favorites')
 var bcrypt = require('bcrypt')
 var flash = require('connect-flash');
 var app = express();
@@ -19,8 +20,28 @@ app.use(session({
 }));
 app.use(flash());
 
-//load controllers
-app.use("/recipes", recipesCtrl);
+//custom middleware - is user logged in
+app.use(function(req,res,next){
+  req.session.user = {
+    id: 9,
+    lists: [{id: 2}]
+  }
+  req.getUser=function(){
+    return req.session.user || false;
+  }
+  next();
+})
+
+app.get('*', function(req,res,next){
+  res.locals.currentUser=req.getUser();
+  next();
+});
+
+
+app.get('/testing',function(req,res){
+  var user = req.getUser();
+  res.send(user);
+});
 
 app.get("/", function(req,res){
   res.render("index");
@@ -35,22 +56,25 @@ app.post("/signup", function(req,res){
   db.user.findOrCreate({where:{email:req.body.email}, defaults:userSignup})
   .spread(function(user,created){
      if(created){
-        res.send('New user created.');
+        console.log('New user created.');
+        user.createList({listName:user.username+"'s List", userId:user.id})
+        .then(function(list){
+          res.redirect("/")
+        });
       } else {
-        res.send('e-mail already exists.');
+        console.log('E-mail already exists.');
       }
   })
      .catch(function(error){
       console.log('ERROR',error);
       res.send(error);
      })
-  res.redirect("/")
 
 
 })
 
 app.post("/login", function(req,res){
-  db.user.find({where:{username:req.body.username}})
+  db.user.find({where:{username:req.body.username},include:[db.list]})
   .then(function(user){
     // res.send(user)
     if(user){
@@ -62,7 +86,8 @@ app.post("/login", function(req,res){
           req.session.user= {
             id:user.id,
             email:user.email,
-            username:user.username
+            username:user.username,
+            lists:user.lists
           };
           // res.send("Logged in!")
           res.redirect("/")
@@ -78,14 +103,53 @@ app.post("/login", function(req,res){
 // res.send(req.body.password)
 })
 
+//GET /auth/logout
+//logout logged in user
+app.get('/logout',function(req,res){
+    delete req.session.user;
+
+    res.redirect('/');
+
+    // res.send('logged out');
+});
+
+//GET /restricted
+//an example restricted page
+app.get('/restricted',function(req,res){
+  if(req.getUser()){
+    // res.render('main/restricted');
+    // res.send(req.getUser)
+    res.send("Working!")
+  } else {
+    // req.flash('danger','You must be logged in to access this page.');
+    // res.redirect('/');
+    res.send("Error")
+  }
+});
+
+
+
+
+
+
+
+
 
 app.get("/mylists", function(req,res){
   res.render("my-lists")
 })
 
 
-app.get("/additem", function(req,res){
-  res.render("add-item");
+app.get("/list", function(req,res){
+
+  var user=req.getUser();
+
+  db.ingredient.findAll({where:{listId:user.lists[0].id}}).then(function(foundIngredients){
+    // res.send(foundIngredients)
+    res.render("list",{ingredient:foundIngredients});
+
+  })
+
 })
 
 
@@ -94,14 +158,21 @@ app.get("/starlist", function(req,res){
 })
 
 
-app.get("/myrecipes", function(req,res){
-  res.render("my-recipes")
+app.get("/my-recipes", function(req,res){
+  db.favorite.findAll().then(function(foundFavorites){
+    var locals={favoriteRecipes:foundFavorites}
+    // res.send(locals);
+    res.render("my-recipes", {favoriteRecipes:foundFavorites})
+  })
 })
 
 app.get("/about", function(req,res){
   res.render("about-contact")
 })
 
+//load controllers
+app.use("/recipes", recipesCtrl);
+app.use("/favorites", favoritesCtrl);
 
 app.listen(3002,function(){
   console.log("Let's do this thing!")

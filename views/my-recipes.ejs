@@ -2,5 +2,15 @@
 <div class="container">
   <h2>my Recipes</h2>
 </div>
+<div>
+  <% for (i=0; i<favoriteRecipes.length; i++){ %>
+    <div>
+      <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
+    </div>
+    <%= favoriteRecipes[i].recipeName %>
+    <%= favoriteRecipes[i].source %>
+
+  <% } %>
+</div>
 
 <% include ./partials/footer %>

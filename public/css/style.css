@@ -1,20 +1,62 @@
 /*General*/
 
 body {
-  background-image: url("http://fc02.deviantart.net/fs70/f/2011/096/1/a/ios_linen_texture___black_by_vegardhw-d3ddll5.png");
-  background-size:cover;
-  background-attachment:fixed;
+  /*background-image: url("http://fc02.deviantart.net/fs70/f/2011/096/1/a/ios_linen_texture___black_by_vegardhw-d3ddll5.png");*/
+  /*background-size:cover;*/
+  /*background-attachment:fixed;*/
   /*overflow:hidden;*/
-  color:white;
+
+  background-color:rgb(240,233,222);
+  color:rgb(253,134,25);
+  font-family: 'Roboto Condensed', sans-serif;
 }
+
 
 .modal{
   color:black;
 }
 
+#navSearchBtn {
+  background-color:137,191,103;
+  color:rgb(63,60,75);
+}
+
 /*Header*/
-nav {
-  color:black;
+.navbar-static-top {
+  /*background-color:rgb(240,233,222);*/
+  background-color:rgb(63,60,75);
+  color:rgb(235,34,25);
+}
+
+.navbar {
+  width: 100vw;
+}
+
+.loginDiv {
+  float: right;
+  background-color:rgb(63,60,75);
+}
+
+div .loginDiv {
+  background-color:rgb(63,60,75);
+}
+
+.navbar-brand {
+   background-color:rgb(63,60,75);
+   font-size:30px;
+   display:inline-block;
+}
+
+a.navText {
+  color:rgb(240,233,222);;
+}
+
+.navbar-default .navbar-nav li a {
+  color:rgb(240,233,222);
+}
+
+.navbar-default .navbar-nav li a:hover {
+  color:rgb(137,191,103);
 }
 
 .loginDiv {
@@ -28,42 +70,161 @@ margin-right:10px;
 }
 
 #navSearch {
-  margin-top:9px;
+  margin-top:5px;
   margin-left:15px;
+  color:rgb(253,134,25);
 }
 
 #navSearchInput {
   border-radius:4px;
   padding:2px;
+  margin-left:3px;
+  margin-top:3px;
+  margin-bottom:4px;
 }
+
+
+
 
 #navSearchBtn {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
-/*Footer*/
+Footer
 
 #footerText {
   text-align:center;
 }
 
+#footerTextHome {
+  float:right;
+}
+
+/*Home*/
+
+#homeCreateButton {
+  min-width: 18%;
+  min-height: 50px;
+
+}
+
+#homeCreateButton img {
+  width:280px;
+  display:block;
+}
+
+
+#mainElements {
+  display:inline;
+
+}
+
+#homeSearch {
+  text-align:center;
+  border: 5px solid white;
+  border-radius:50%;
+  opacity:0.7;
+  width:380px;
+  height:380px;
+  background-color:rgb(137,191,103);
+  padding: 30px;
+  float:right;
+  margin-right:30px;
+}
+
+
+#homeSearchBox {
+  max-width: 280px;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+#searchText {
+  margin-top: 30%;
+  margin-bottom:10px;
+  font-size:30px;
+  color:rgb(63,60,75);
+
+
+}
+
+#homePageDiv {
+ /* background-image: url("http://globe-net.com/wp-content/uploads/GroceryBag.jpg");*/
+  /*background-image: url("http://www.marthastewart.com/sites/files/marthastewart.com/imagecache/wmax-1500/ecl/everyday_food-hires/2012/06_july_aug/grocery_bag/ingredients-med108588_sq.jpg");*/
+ /* background-image: url(https://imgoodfat.files.wordpress.com/2013/03/stew-all-ingredients.jpg);*/
+ /*background-image: url("http://ime4schools.com/wp-content/uploads/2014/11/paperbag.jpg");*/
+ background-image:url("http://www.organized-simplicity.com/site/wp-content/uploads/2012/02/grocery-bag-fresh-direct.jpg");
+  background-attachment:fixed;
+  background-size:cover;
+
+}
+
+#homePageDiv img {
+     -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.form {
+
+}
+
 /*Recipe Results*/
 
 .recipeResultsPhoto {
-  width: 300px;
+  width: 100%;
   /*min-height:200px;*/
   height:300px;
+  margin-bottom:25px;
+  margin-right:50px;
+  opacity: 1;
+  vertical-align: bottom;
+}*/
+
+.recipeResultsPhoto:hover {
+  opacity: .7;
+}
+
+div.resultText {
+  /*opacity: .5;*/
+  font-size:20px;
+  margin-top:-115px;
+  /*margin-bottom:50px;*/
+  max-width:100%;
+  margin-left:10px;
+  vertical-align: middle;
+  color:black;
+  /*background-color:rgba(255,255,255,1);*/
+  /*background-color:red;*/
+  display:block;
+}
+
+
+.recipeResultsPhoto:hover div.resultText {
+  opacity:0;
 
 }
 
 #searchResultsField {
   /*display:inline-block;*/
+  text-align:center;
 }
 
 .resultDiv {
   display:inline-block;
+  min-width:24%;
+  max-width: 26%;
+  margin-right:10px;
+
+  min-height: 320px;
+  vertical-align: bottom;
 }
 
+#resultsHeader {
+  margin-bottom:30px;
+}
 
 
 
@@ -122,7 +283,7 @@ margin-right:10px;
   text-align:center;
   /*margin-bottom:30px;*/
   padding-top:30px;
-  color:black;
+  color:rgb(63,60,75);
   opacity:1;
   font-size:22px;
 }
@@ -132,7 +293,7 @@ margin-right:10px;
   height:400px;
   border-radius:5px;
   background:white;
-  opacity:0.3;
+  /*opacity:0.3;*/
   margin-top:40px;
   text-align:center;
 
@@ -140,9 +301,29 @@ margin-right:10px;
 
 .addFormBox {
   width:400px;
-  margin: 0 auto;
-
+  margin: 3px auto;
 
 }
 
+.addFormLabel {
+  margin-top:10px;
+}
+
+
+/*Show*/
+
+div.showIngredientList {
+  display:block;
+  color: rgb(63,60,75);
+
+}
+
+.showImage {
+  height:300px;
+  width:300px;
+}
+
+.addIngredientsBtn {
+  background-color: rgb(63,60,75);
+}
 

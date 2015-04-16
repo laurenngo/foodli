@@ -6,12 +6,12 @@
   </title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="/js/script.js"></script>
 
 </head>
-
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <a class="navbar-brand" href="/">food&ltli&gt </a>
@@ -20,21 +20,27 @@
      <!--  <a href="/">Home</a> -->
     </li>
     <li>
-      <a href="/mylists">My Lists</a>
+      <a href="/list">My Shopping List</a>
     </li>
     <li>
-      <a href="/additem">Add Item</a>
-    </li>
-    <li>
-      <a href="/myrecipes">Favorite Recipes</a>
+      <a href="/my-recipes">My Recipes</a>
     </li>
     <li>
       <a href="/starlist">Starred Ingredients</a>
     </li>
   </ul>
-  <div class="loginDiv">
+  <div class="loginDiv navbar-right">
+    <% if (currentUser){ %>
+    <a href="/logout" class="btn" id="logoutBtn">
+      LogOut
+    </a>
+    <% } else { %>
     <button class="btn" id="signupBtn" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+
     <button class="btn" id="loginBtn" data-toggle="modal" data-target="#loginModal">LogIn</button>
+    <% } %>
+
+
   </div>
 </nav>
 
@@ -78,9 +84,9 @@
       </div>
       <div class="modal-body">
         <!-- ... -->
-        <label class="formLabel">USERNAME</label>
+        <label class="formLabel" value="ianpgo">USERNAME</label>
         <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
-        <label class="formLabel">PASSWORD</label>
+        <label class="formLabel" value="ianiscute">PASSWORD</label>
         <input type="password" class="form-control" id="passwordBox" name="password" placeholder="Enter your password here.">
 
       </div>
@@ -97,24 +103,52 @@
 
 
 
-<body>
+<body id="homePageDiv">
 
-<div class="container">
+<div class="container" id="homePageDiv">
+ <div id="mainElements">
+
   <form class="form" action="/recipes/search" id ="homeSearch" method="GET">
 
     <div class="form-group">
-
-      <input type="text" class="form-control" id="homeSearchBox" name="q" placeholder="Search for a recipe!">
+      <div id="searchText">SEARCH FOR A RECIPE</div>
+      <input type="text" class="form-control" id="homeSearchBox" name="q" placeholder="Search">
     </div>
 
     <button type="submit" id = "homeSearchButton" class="btn btn-primary">Submit</button>
   </form>
 
-  <h2>OR</h2>
+ <!--  <h2>OR</h2>
 
   <form action="/create" id="createButtonForm" method="">
-    <button type="submit" id = "homeSearchButton" class="btn btn-primary">Create a List!</button>
-  </form>
+    <button type="submit" id = "homeCreateButton" class="btn">
+     <img src="https://cdn4.iconfinder.com/data/icons/devine_icons/Black/PNG/System%20and%20Internet/JAVA.png">
+    Create a List!
+    </button>
+  </form> -->
+ </div>
 </div>
 
-<% include ./partials/footer %>
+</body>
+
+<footer>
+
+
+
+
+<!-- <hr> -->
+
+<div class="container">
+
+  <div id="footerTextHome">
+    <a href="/about">About | Contact</a>
+    <div>&copy Lauren Go</div>
+  </div>
+
+
+
+</div>
+
+
+</footer>
+</html>
