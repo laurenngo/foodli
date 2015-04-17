@@ -9,14 +9,26 @@
     <div id="currentList">
 
       <table class="table">
+      <tr>
+        <th>ITEM</th>
+        <th>QTY.</th>
+        <th>UNITS</th>
+        <th>DEPT</th>
+      </tr>
     <% for (var i=0;i< ingredient.length;i++){ %>
+
 
       <tr>
 
-      <td><%= ingredient[i].name %></td>
+      <td>
+    <!-- <div> -->
+       <span class = "delete-item glyphicon glyphicon-ok" id= "ing-remove" input type="button"></span>
+    <!-- </div class="glyph"> -->
+      <%= ingredient[i].name %></td>
       <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
       <td><%= ingredient[i].unit %></td>
-      <td><%= ingredient[i].department %></td>
+      <td><%= ingredient[i].department %>
+      </td>
       </tr>
     <% } %>
     </table>
@@ -44,10 +56,14 @@
         <label class="addFormLabel">UNITS</label>
 
           <select name="unit">
-            <option value="Gal">Gal</option>
-            <option value="Oz">Oz</option>
-            <option value="Cups">Cups</option>
-            <option value="Tbsp(s)">Tbsp(s)</option>
+            <option value="gal">Gal</option>
+            <option value="oz">Oz</option>
+            <option value="cups">Cups</option>
+            <option value="tablespoons">Tablespoons</option>
+            <option value="tablespoons">Tbsp</option>
+            <option value="teaspoons">Teaspoons</option>
+            <option value="tablespoons">Tsp</option>
+            <option value="ml">Ml</option>
           </select>
 
 
@@ -59,7 +75,7 @@
 
 
 
-  <div class="addItemForm">
+  <!-- <div class="addItemForm">
 
     <div class="addItemHeader">
       <strong><span class="glyphicon glyphicon-star"></span> FAVORITE ITEMS</strong>
@@ -69,7 +85,7 @@
 
 
 
-  </div>
+  </div> -->
 
   </div>
 </div>

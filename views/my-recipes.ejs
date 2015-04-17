@@ -6,7 +6,7 @@
 <div id="favoritesField">
     <% for (i=0; i<favoriteRecipes.length; i++){ %>
        <div class="favoriteRecipe">
-      <a href="/favorites/<%= favoriteRecipes[i].recId%>">
+      <a class="favLink" href="/recipes/<%= favoriteRecipes[i].recId%>">
          <!-- <div class="eachFavorite"> -->
           <!-- <div class="eachFavoriteImage"> -->
             <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
@@ -15,7 +15,7 @@
             <%= favoriteRecipes[i].recipeName %>
             <%= favoriteRecipes[i].source %>
           </div>
-          <input type="button" value="X" class="btn delete-button">
+          <span class = "delete-button glyphicon glyphicon-remove" input type="button"></span>
       </a>
        </div>
       <% } %>

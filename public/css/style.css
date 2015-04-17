@@ -69,6 +69,14 @@ margin-top:10px;
 margin-right:10px;
 }
 
+.loginBtn {
+  color:rgb(220,15,0);
+}
+
+.signupBtn {
+  color:rgb(220,15,0);
+}
+
 .formLabel {
   margin-top:10px;
 }
@@ -98,20 +106,33 @@ margin-right:10px;
   margin-bottom:3px;
 }
 
+#navSearchBtn:hover {
+  color:rgb(63,60,75);
+}
+
 #logoutBtn {
   background-color: rgb(137,191,103);
   color:white;
 
 }
 
+#logoutBtn:hover {
+  color:rgb(63,60,75);
+}
+
 Footer
 
 #footerText {
-  text-align:center;
+  float:right;
+  margin-top:100px;
 }
 
 #footerTextHome {
   float:right;
+}
+
+.copy {
+  color:rgb(51, 122, 183);
 }
 
 /*Home*/
@@ -170,6 +191,7 @@ Footer
  background-image:url("http://www.organized-simplicity.com/site/wp-content/uploads/2012/02/grocery-bag-fresh-direct.jpg");
   background-attachment:fixed;
   background-size:cover;
+  height:100%;
 
 }
 
@@ -181,9 +203,6 @@ Footer
     transform: rotate(180deg);
 }
 
-.form {
-
-}
 
 /*Recipe Results*/
 
@@ -213,7 +232,10 @@ div.resultText {
   /*background-color:rgba(255,255,255,1);*/
   /*background-color:red;*/
   display:block;
+  text-decoration: none;
 }
+
+
 
 
 .recipeResultsPhoto:hover div.resultText {
@@ -238,6 +260,40 @@ div.resultText {
 
 #resultsHeader {
   margin-bottom:30px;
+}
+
+a:-webkit-any-link {
+  text-decoration: none;
+
+
+}
+
+.delete-button {
+  opacity:0.6;
+  color:;
+  float:right;
+  margin-right:10px;
+  margin-bottom:10px;
+  position:relative;
+
+}
+
+.glyphicon-remove {
+  font-size:22px;
+  color:rgb(220,15,0);
+  background-color:white;
+  padding:2px;
+}
+
+.glyphicon-remove:hover {
+  opacity:0.8;
+  background-color:rgb(220,15,0);
+  color:white;
+}
+
+img .myRecipesImage:hover {
+  color:white;
+
 }
 
 
@@ -299,7 +355,14 @@ div.resultText {
   padding-top:30px;
   color:rgb(63,60,75);
   opacity:1;
+  font-size:20px;
+}
+
+th {
+  padding:30px;
+  opacity:1;
   font-size:22px;
+  color:rgb(63,60,75);
 }
 
 .addItemForm {
@@ -334,6 +397,32 @@ div.resultText {
   margin-top:10px;
 }
 
+.glyphicon-ok {
+  font-size:16px;
+  margin-left:10px;
+  background-color:rgb(63,60,75);
+  color:white;
+  padding:3px;
+  opacity:0.5;
+  border-radius:5px;
+}
+
+.glyphicon-ok:hover {
+  background-color:white;
+  color:rgb(137,191,103);
+  opacity:1;
+}
+
+.ingredientSubmit {
+  background-color:rgb(137,191,103);
+  color:white;
+  margin-left:3px;
+}
+
+.delete-item {
+  margin-right: 8px;
+  padding-left:5px ;
+}
 
 /*Show*/
 
@@ -343,13 +432,94 @@ div.showIngredientList {
 
 }
 
-.showImage {
+img.showImage {
   height:300px;
   width:300px;
+  float:right;
+
 }
 
 .addIngredientsBtn {
-  background-color: rgb(63,60,75);
+  background-color: rgb(137,191,103);
+  float:right;
+  color:white;
+}
+
+#showPageHeader {
+  color: rgb(63,60,75);
+  font-size:30px;
+}
+
+#showPoster {
+  font-weight:300;
+  font-size:20px;
+}
+
+.showImage {
+  margin-top:20px;
+  float:right;
+}
+
+#bigOvenRating {
+  float:right;
+  margin-top:8px;
+  margin-right:10px;
+}
+
+h5 {
+  float:right;
+}
+
+
+.recipeInstructions {
+
+  font-size:16px;
+  font-weight:400;
+}
+
+div #headers {
+  display:inline;
+}
+
+.leftPanel {
+  padding-left:0;
+}
+
+#ingredientsDiv {
+  background-color:white;
+  opacity:0.8;
+  border-radius:10px;
+  border:4px solid white;
+  padding-top:10px;
+  padding-bottom:10px;
+  font-size: 16px;
+}
+
+#servings {
+  font-size:18px;
+  /*margin-bottom:50px;*/
+}
+
+.eachIngredient {
+  margin: 3px 0;
+}
+
+.recipeDescription {
+  margin-top:20px;
+}
+
+#desDiv {
+
+padding-left: 0;
+font-size:20px;
+font-weight:300;
+padding-top:16px;
+}
+
+.addMyRecipes {
+  float:left;
+  margin-top:10px;
+  color:rgb(220,15,0);
 }
 
 /*My Recipes*/
@@ -363,6 +533,11 @@ div.showIngredientList {
   margin-right:50px;
   opacity: 1;
   vertical-align: bottom;
+}
+
+.myRecipesImage:hover {
+  opacity:0.6;
+
 }
 
 

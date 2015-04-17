@@ -16,8 +16,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     hooks:{
       beforeCreate:function (ingredient,options){
-        ingredient.name=toTitleCase(ingredient.name);
+        // ingredient.name=toTitleCase(ingredient.name);
         ingredient.department=toTitleCase(ingredient.department);
+        // ingredient.unit=toTitleCase(ingredient.unit);
     }
   },
     classMethods: {

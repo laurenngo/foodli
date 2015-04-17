@@ -15,11 +15,14 @@ router.use(bodyParser.urlencoded({extended:false}));
 router.post("/", function(req,res){
   var user=req.getUser();
   var alerts = req.flash();
+  res.locals.user=req.getUser();
 
   if (!user) {
-    req.flash('danger', 'You have to be logged in to access this page!')
+    console.log('not user');
+    // req.flash('danger', 'You have to be logged in to access this page!')
+    res.render('index')
  } else {
-
+  console.log('is user');
   db.favorite.findOrCreate ({where:{recipeName:req.body.Title, source:req.body.UserName, recId:req.body.RecipeID, image:req.body.ImageURL, userId:user.id}})
     .spread(function(foundEntry,created){
       foundEntry.save().then(function(){

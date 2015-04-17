@@ -91,11 +91,13 @@ app.post("/ingredients/:listId/additem", function(req,res){
 
 app.get('/testing',function(req,res){
   var user = req.getUser();
+
   res.send(user);
 });
 
 app.get("/", function(req,res){
-   var user=req.getUser();
+   // var user=req.getUser();
+   res.locals.user=req.getUser();
    var alerts = req.flash();
    console.log(req.getUser())
   res.render("index");
@@ -148,10 +150,12 @@ app.post("/login", function(req,res){
           res.redirect("/")
         } else {
           // res.send("Sorry, nope!")
+          res.redirect("index")
         }
       })
     } else {
       // res.send("Unknown user. Sign up!")
+      res.redirect("index")
     }
   })
 
@@ -197,10 +201,12 @@ app.get("/list", function(req,res){
   var user=req.getUser();
   var alerts = req.flash();
 
-  if(!user) req.flash('You must be logged in to add to My Shopping List.');
-
+  if(!user) {
+    console.log('not user');
+    req.flash('You must be logged in to add to My Shopping List.');
+  }
   //SELECT COUNT(*),department,name,SUM(quantity::INTEGER) as total_qty,unit FROM ingredients WHERE "listId"=2 GROUP BY name,unit,department ORDER BY name ASC;
-
+  else{
   db.ingredient.findAll({
     attributes:['department',
     'name',
@@ -220,6 +226,7 @@ app.get("/list", function(req,res){
     });
 
   })
+}
 
 })
 
