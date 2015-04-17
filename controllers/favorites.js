@@ -5,6 +5,7 @@ var router = express.Router();
 var app = express();
 var request = require("request");
 var db=require("../models");
+var flash=require('connect-flash');
 
 router.use(bodyParser.urlencoded({extended:false}));
 
@@ -19,8 +20,8 @@ router.post("/", function(req,res){
 
   if (!user) {
     console.log('not user');
-    // req.flash('danger', 'You have to be logged in to access this page!')
-    res.render('index')
+    req.flash('danger', 'You have to be logged in to access this page!');
+    // res.render('index')
  } else {
   console.log('is user');
   db.favorite.findOrCreate ({where:{recipeName:req.body.Title, source:req.body.UserName, recId:req.body.RecipeID, image:req.body.ImageURL, userId:user.id}})
@@ -43,6 +44,8 @@ router.delete("/:recId", function(req,res){
 
   console.log(req.params.RecipeID)
 })
+
+// router.delete("/")
 
 //Deletes favorite
 // router.delete("/:id", function(req,res){

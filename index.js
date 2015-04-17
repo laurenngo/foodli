@@ -5,8 +5,8 @@ var recipesCtrl = require('./controllers/recipes');
 var ingredientsCtrl = require('./controllers/ingredients');
 var favoritesCtrl = require('./controllers/favorites')
 var bcrypt = require('bcrypt')
-var flash = require('connect-flash');
 var app = express();
+var flash = require('connect-flash');
 var db=require("./models");
 
 
@@ -22,6 +22,11 @@ app.use(session({
 app.use(flash());
 
 
+app.use("*",function(req,res,next){
+  var alerts = req.flash();
+  res.locals.alerts=req.flash();
+  next();
+})
 
 //custom middleware - is user logged in
 app.use(function(req,res,next){
@@ -35,11 +40,6 @@ app.use(function(req,res,next){
   next();
 })
 
-app.use("*",function(req,res,next){
-  var alerts = req.flash();
-  res.locals.alerts=req.flash();
-  next();
-})
 
 app.get('*', function(req,res,next){
   res.locals.user=req.getUser();
