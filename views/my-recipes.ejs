@@ -1,17 +1,25 @@
 <% include ./partials/header %>
 <div class="container">
-  <h2>my Recipes</h2>
+  <span><% include ./partials/alert %></span>
+  <h2 id="myRecipesHeader">my Recipes</h2>
 
 <div id="favoritesField">
-  <div class="eachFavorite">
     <% for (i=0; i<favoriteRecipes.length; i++){ %>
-      <div class="eachFavoriteImage">
-        <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
+       <div class="favoriteRecipe">
+      <a href="/favorites/<%= favoriteRecipes[i].recId%>">
+         <!-- <div class="eachFavorite"> -->
+          <!-- <div class="eachFavoriteImage"> -->
+            <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
+          <!-- </div> -->
+          <div class="resultText">
+            <%= favoriteRecipes[i].recipeName %>
+            <%= favoriteRecipes[i].source %>
+          </div>
+          <input type="button" value="X" class="btn delete-button">
+      </a>
+       </div>
+      <% } %>
       </div>
-      <%= favoriteRecipes[i].recipeName %>
-      <%= favoriteRecipes[i].source %>
-
-    <% } %>
   </div>
 </div>
 

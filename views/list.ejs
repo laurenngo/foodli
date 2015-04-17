@@ -2,6 +2,9 @@
 
 
 <div class="container">
+
+  <span><% include ./partials/alert %></span>
+
   <div class="col-md-6">
     <div id="currentList">
 
@@ -11,7 +14,7 @@
       <tr>
 
       <td><%= ingredient[i].name %></td>
-      <td><%= parseFloat(ingredient[i].quantity).toFixed(2) %></td>
+      <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
       <td><%= ingredient[i].unit %></td>
       <td><%= ingredient[i].department %></td>
       </tr>
@@ -30,24 +33,25 @@
         <strong>ADD AN ITEM TO YOUR LIST</strong>
       </div>
 
-        <form action="/<%= user.lists[0].id%>/additem" method="POST">
+        <form action="ingredients/<%= user.lists[0].id%>/additem" method="POST">
 
         <label class="addFormLabel">ITEM NAME</label>
         <input type="text" class="form-control addFormBox" id="usernameBox" name="itemName" placeholder="Enter an item here.">
+        <label class="addFormLabel">DEPARTMENT</label>
+        <input type="text" class="form-control addFormBox" id="usernameBox" name="itemDepartment" placeholder="Enter a grocery department here.">
         <label class="addFormLabel">QTY</label>
         <input type="text" class="form-control addFormBox" id="usernameBox" name="itemQty" placeholder="Enter a qty here.">
-
         <label class="addFormLabel">UNITS</label>
 
-          <select>
-            <option name="units" value="Gal">Gal</option>
-            <option name="units" value="Oz">Oz</option>
-            <option name="units" value="Cups">Cups</option>
-            <option name="units" value="Tbsp(s)">Tbsp(s)</option>
+          <select name="unit">
+            <option value="Gal">Gal</option>
+            <option value="Oz">Oz</option>
+            <option value="Cups">Cups</option>
+            <option value="Tbsp(s)">Tbsp(s)</option>
           </select>
 
 
-        <button class="btn" type="submit">ADD TO LIST!</button>
+        <button class="btn ingredientSubmit" type="submit">ADD TO LIST!</button>
 
       </form>
 

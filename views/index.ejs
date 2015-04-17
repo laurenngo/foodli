@@ -19,18 +19,20 @@
     <li class="active">
      <!--  <a href="/">Home</a> -->
     </li>
+     <% if (user){ %>
     <li>
-      <a href="/list">My Shopping List</a>
+      <a href="/list" class="navText">My Shopping List</a>
     </li>
     <li>
-      <a href="/my-recipes">My Recipes</a>
+      <a href="/my-recipes" class="navText">My Recipes</a>
     </li>
+      <% } %>
   <!--   <li>
       <a href="/starlist">Starred Ingredients</a>
     </li> -->
   </ul>
   <div class="loginDiv navbar-right">
-    <% if (currentUser){ %>
+    <% if (user){ %>
     <a href="/logout" class="btn" id="logoutBtn">
       LogOut
     </a>
@@ -106,6 +108,7 @@
 <body id="homePageDiv">
 
 <div class="container" id="homePageDiv">
+  <span><% include ./partials/alert %></span>
  <div id="mainElements">
 
   <form class="form" action="/recipes/search" id ="homeSearch" method="GET">

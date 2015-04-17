@@ -12,6 +12,8 @@ var bigOvenId=process.env.BIGOVEN_KEY;
 //GET for recipe search
 router.get('/search',function(req,res){
 
+  console.log(req.getUser())
+
 // res.send(bigOvenId)
 var url='http://api.bigoven.com/recipes';
 
@@ -50,6 +52,7 @@ var data = {
 //GET for specific recipe pages
 
 router.get("/:RecipeID", function(req,res){
+  console.log(req.getUser())
   var recipeID = req.params.RecipeID
   var api_key= process.env.BIGOVEN_KEY;
   var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+api_key;
@@ -79,10 +82,11 @@ router.get("/:RecipeID", function(req,res){
 router.get("/mylist/add-recipe/:RecipeID", function(req,res){
 
   var user=req.getUser();
+  console.log(req.getUser())
 
   //check for stuff ... leave on error
-  if(!user) return res.send('You must be logged in!!');
-  if(!user.lists) return res.send('You do not have a list');
+  if(!user) return req.flash('You must be logged in!!');
+  if(!user.lists) return req.flash('You do not have a list');
 
   var recipeID = req.params.RecipeID
   var api_key= process.env.BIGOVEN_KEY;

@@ -365,17 +365,28 @@ div.showIngredientList {
   vertical-align: bottom;
 }
 
-.eachFavorite {
-  /*display:inline-block;*/
-  min-width:24%;
-  max-width: 26%;
-  margin-right:10px;
-
-  min-height: 320px;
-  vertical-align: bottom;
-}
 
 #favoritesField {
+  display:inline-block;
+  width:100%;
 
+  text-align:center;
+  height:100%;
+
+}
+
+.favoriteRecipe {
+  display:inline-block;
+
+  min-width:24%;
+  max-width:26%;
+  margin-right:10px;
+  min-height:320px;
+  vertical-align:bottom;
+
+}
+
+#myRecipesHeader {
+  margin-bottom:30px;
 }
 

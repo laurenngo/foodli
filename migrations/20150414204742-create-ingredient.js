@@ -12,7 +12,7 @@ module.exports = {
         type: DataTypes.TEXT
       },
       quantity: {
-        type: DataTypes.STRING
+        type: DataTypes.FLOAT
       },
       unit: {
         type: DataTypes.STRING

@@ -2,6 +2,7 @@ var express = require('express');
 var session = require ("express-session");
 var bodyParser = require('body-parser');
 var recipesCtrl = require('./controllers/recipes');
+var ingredientsCtrl = require('./controllers/ingredients');
 var favoritesCtrl = require('./controllers/favorites')
 var bcrypt = require('bcrypt')
 var flash = require('connect-flash');
@@ -20,22 +21,72 @@ app.use(session({
 }));
 app.use(flash());
 
+
+
 //custom middleware - is user logged in
 app.use(function(req,res,next){
-  req.session.user = {
-    id: 9,
-    lists: [{id: 2}]
-  }
-  req.getUser=function(){
+  // req.session.user = {
+  //   id: 9,
+  //   lists: [{id: 2}]
+  // }
+  req.getUser= function(){
     return req.session.user || false;
   }
   next();
 })
 
+app.use("*",function(req,res,next){
+  var alerts = req.flash();
+  res.locals.alerts=req.flash();
+  next();
+})
+
 app.get('*', function(req,res,next){
-  res.locals.currentUser=req.getUser();
+  res.locals.user=req.getUser();
   next();
 });
+
+
+//THIS NEEDS TO BE IN INGREDIENTS CONTROLLER WHEN IT DECIDES TO SENSE IT
+app.post("/ingredients/:listId/additem", function(req,res){
+
+  var user=req.getUser();
+  //check for stuff ... leave on error
+  if(!user) return req.flash('success','You must be logged in to access My Recipes.');
+  if(!user.lists) return req.flash('success','You do not have a list!');
+
+  // console.log("HELLO IM HERE!")
+  db.list.find({where:{id:user.lists[0].id}}).then(function(foundList){
+    // console.log('FOUNDLIST', foundList)
+    var myList=user.lists.id
+    db.ingredient.create({name:req.body.itemName, quantity:req.body.itemQty, unit:req.body.unit, department:req.body.itemDepartment, listId:user.lists.id}).then(function(createdItem){
+      console.log(req.body)
+      foundList.addIngredient(createdItem)
+
+      // console.log('CREATEDITEM', createdItem)
+      res.redirect("/list")
+    })
+  })
+
+})
+
+//THIS TOO!
+
+// app.get("/ingredients/:listId/additem", function(req,res){
+//   var user=req.getUser();
+
+//   // db.list.find({where:{id:user.lists[0].id}}).then(function(foundData){
+//   //   console.log("HEY YOU",foundData)
+
+//     db.ingredient.findAll({where:{listId:user.lists.id}}).then(function(ingredientData){
+//       // res.render("list", {currUserList:foundData, currIngredients:ingredientData})
+//       res.send(ingredientData)
+//     // })
+//   })
+// })
+
+
+
 
 
 app.get('/testing',function(req,res){
@@ -44,10 +95,14 @@ app.get('/testing',function(req,res){
 });
 
 app.get("/", function(req,res){
+   var user=req.getUser();
+   var alerts = req.flash();
+   console.log(req.getUser())
   res.render("index");
 })
 
 app.post("/signup", function(req,res){
+  var alerts = req.flash();
   var userSignup ={email:req.body.email,
                    username:req.body.username,
                    password:req.body.password
@@ -56,18 +111,18 @@ app.post("/signup", function(req,res){
   db.user.findOrCreate({where:{email:req.body.email}, defaults:userSignup})
   .spread(function(user,created){
      if(created){
-        console.log('New user created.');
+        req.flash('Your account has successfully been created!');
         user.createList({listName:user.username+"'s List", userId:user.id})
         .then(function(list){
           res.redirect("/")
         });
       } else {
-        console.log('E-mail already exists.');
+        req.flash('The email you entered already exists. Please log-in or sign up with a different email account.');
       }
   })
      .catch(function(error){
-      console.log('ERROR',error);
-      res.send(error);
+      req.flash('An error has occured:',error);
+      // res.send(error);
      })
 
 
@@ -106,6 +161,7 @@ app.post("/login", function(req,res){
 //GET /auth/logout
 //logout logged in user
 app.get('/logout',function(req,res){
+    var user=req.getUser();
     delete req.session.user;
 
     res.redirect('/');
@@ -121,21 +177,17 @@ app.get('/restricted',function(req,res){
     // res.send(req.getUser)
     res.send("Working!")
   } else {
-    // req.flash('danger','You must be logged in to access this page.');
+    req.flash('You must be logged in to access this page. Please log-in!');
     // res.redirect('/');
-    res.send("Error")
+    // res.send("Error")
   }
 });
 
 
 
-
-
-
-
-
-
 app.get("/mylists", function(req,res){
+  console.log(req.getUser())
+  var user=req.getUser();
   res.render("my-lists")
 })
 
@@ -143,22 +195,43 @@ app.get("/mylists", function(req,res){
 app.get("/list", function(req,res){
 
   var user=req.getUser();
+  var alerts = req.flash();
 
-  db.ingredient.findAll({where:{listId:user.lists[0].id}}).then(function(foundIngredients){
+  if(!user) req.flash('You must be logged in to add to My Shopping List.');
+
+  //SELECT COUNT(*),department,name,SUM(quantity::INTEGER) as total_qty,unit FROM ingredients WHERE "listId"=2 GROUP BY name,unit,department ORDER BY name ASC;
+
+  db.ingredient.findAll({
+    attributes:['department',
+    'name',
+    'unit',
+    [db.sequelize.fn('count','*'),'cnt'],
+    [db.sequelize.fn('sum',db.sequelize.col('quantity')),'totalqty']
+    ],
+    where:{listId:user.lists[0].id},
+    group:['name','unit','department'],
+    order:'department ASC'
+  }).then(function(foundIngredients){
     // res.send(foundIngredients)
-    res.render("list",{ingredient:foundIngredients, user:user});
+
+    res.render("list",{
+      ingredient:foundIngredients.map(function(i){ return i.get();}),
+      user:user
+    });
 
   })
 
 })
 
 
-app.get("/starlist", function(req,res){
-  res.render("star-list");
-})
+// app.get("/starlist", function(req,res){
+//   res.render("star-list");
+// })
 
 
 app.get("/my-recipes", function(req,res){
+  console.log(req.getUser())
+  var user=req.getUser();
   db.favorite.findAll().then(function(foundFavorites){
     var locals={favoriteRecipes:foundFavorites}
     // res.send(locals);
@@ -167,12 +240,14 @@ app.get("/my-recipes", function(req,res){
 })
 
 app.get("/about", function(req,res){
+  var user=req.getUser();
   res.render("about-contact")
 })
 
 //load controllers
 app.use("/recipes", recipesCtrl);
 app.use("/favorites", favoritesCtrl);
+app.use("/ingredients", ingredientsCtrl);
 
 app.listen(process.env.PORT || 3002,function(){
   console.log("Let's do this thing!")
