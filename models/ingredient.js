@@ -15,10 +15,24 @@ module.exports = function(sequelize, DataTypes) {
     listId: DataTypes.INTEGER
   }, {
     hooks:{
+      beforeBulkCreate: function(ingredient,options){
+        console.log("*********************************", ingredient)
+        for (var i=0; i<ingredient.length; i++){
+         if (ingredient[i].dataValues.name) {
+        ingredient[i].dataValues.name=toTitleCase(ingredient[i].dataValues.name);
+        }
+        if (ingredient[i].dataValues.department) {
+        ingredient[i].dataValues.department=toTitleCase(ingredient[i].dataValues.department);
+        }
+        if (ingredient[i].dataValues.unit) {
+        ingredient[i].dataValues.unit=toTitleCase(ingredient[i].dataValues.unit);
+        }
+      }
+    },
       beforeCreate:function (ingredient,options){
-        // ingredient.name=toTitleCase(ingredient.name);
+        ingredient.name=toTitleCase(ingredient.name);
         ingredient.department=toTitleCase(ingredient.department);
-        // ingredient.unit=toTitleCase(ingredient.unit);
+        ingredient.unit=toTitleCase(ingredient.unit);
     }
   },
     classMethods: {

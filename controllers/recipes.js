@@ -25,7 +25,6 @@ var data = {
   };
   //?pg=1&rpp=25&title_kw=taco&api_key=...
 
-  // res.send(data);
 
   request(
   {
@@ -86,7 +85,10 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
   console.log(req.getUser())
 
   // check for stuff ... leave on error
-  // if(!user) return req.flash('You must be logged in!!');
+  if(!user) {
+   req.flash('danger', 'Please login to access that page!');
+  res.render('index', {alerts:req.flash()});
+ } else {
   // if(!user.lists) return req.flash('You do not have a list');
 
   var recipeID = req.params.RecipeID
@@ -127,7 +129,7 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
       })
       console.log(newIngredients)
 
-        db.ingredient.bulkCreate(newIngredients)
+        db.ingredient.bulkCreate(newIngredients, {hooks:true})
         .then(function(ingredient){
             console.log(ingredient);
             res.redirect("/list");
@@ -144,9 +146,8 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
   }
 }
 );
+ }
     });
-
-
 
 
 

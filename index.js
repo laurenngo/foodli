@@ -2,7 +2,6 @@ var express = require('express');
 var session = require ("express-session");
 var bodyParser = require('body-parser');
 var recipesCtrl = require('./controllers/recipes');
-var ingredientsCtrl = require('./controllers/ingredients');
 var favoritesCtrl = require('./controllers/favorites')
 var bcrypt = require('bcrypt')
 var app = express();
@@ -47,15 +46,18 @@ app.get('*', function(req,res,next){
 });
 
 
-//THIS NEEDS TO BE IN INGREDIENTS CONTROLLER WHEN IT DECIDES TO SENSE IT
+//POST to add an item to the user's list
 app.post("/ingredients/:listId/additem", function(req,res){
 
   var user=req.getUser();
   //check for stuff ... leave on error
-  if(!user) return req.flash('success','You must be logged in to access My Recipes.');
-  if(!user.lists) return req.flash('success','You do not have a list!');
+  // if(!user) return req.flash('success','You must be logged in to access My Recipes.');
+  if(!user){
+    console.log("FAIL")
+    res.redirect("/")
+  }
+  if(!user.lists) return req.flash('danger','You do not have a list! Please contact system administrator.');
 
-  // console.log("HELLO IM HERE!")
   db.list.find({where:{id:user.lists[0].id}}).then(function(foundList){
     // console.log('FOUNDLIST', foundList)
     var myList=user.lists.id
@@ -69,24 +71,6 @@ app.post("/ingredients/:listId/additem", function(req,res){
   })
 
 })
-
-//THIS TOO!
-
-// app.get("/ingredients/:listId/additem", function(req,res){
-//   var user=req.getUser();
-
-//   // db.list.find({where:{id:user.lists[0].id}}).then(function(foundData){
-//   //   console.log("HEY YOU",foundData)
-
-//     db.ingredient.findAll({where:{listId:user.lists.id}}).then(function(ingredientData){
-//       // res.render("list", {currUserList:foundData, currIngredients:ingredientData})
-//       res.send(ingredientData)
-//     // })
-//   })
-// })
-
-
-
 
 
 app.get('/testing',function(req,res){
@@ -113,21 +97,24 @@ app.post("/signup", function(req,res){
   db.user.findOrCreate({where:{email:req.body.email}, defaults:userSignup})
   .spread(function(user,created){
      if(created){
-        req.flash('Your account has successfully been created!');
+        // req.flash('Your account has successfully been created!');
+        console.log("SUCCESS!")
+        res.redirect("/")
         user.createList({listName:user.username+"'s List", userId:user.id})
         .then(function(list){
           res.redirect("/")
         });
       } else {
-        req.flash('The email you entered already exists. Please log-in or sign up with a different email account.');
+        // req.flash('The email you entered already exists. Please log-in or sign up with a different email account.');
+      console.log("FAIL")
+      res.redirect("/")
       }
   })
      .catch(function(error){
-      req.flash('An error has occured:',error);
-      // res.send(error);
+      // req.flash('An error has occured:',error);
+
+      res.send(error);
      })
-
-
 })
 
 app.post("/login", function(req,res){
@@ -147,7 +134,9 @@ app.post("/login", function(req,res){
             lists:user.lists
           };
           // res.send("Logged in!")
-          res.redirect("/")
+          // req.flash('success', 'You have been successfully logged in!');
+          // res.render('index', {alerts:req.flash()});;
+            res.redirect("/")
         } else {
           // res.send("Sorry, nope!")
           res.redirect("index")
@@ -181,9 +170,9 @@ app.get('/restricted',function(req,res){
     // res.send(req.getUser)
     res.send("Working!")
   } else {
-    req.flash('You must be logged in to access this page. Please log-in!');
+    // req.flash('You must be logged in to access this page. Please log-in!');
     // res.redirect('/');
-    // res.send("Error")
+    res.send("Error")
   }
 });
 
@@ -199,11 +188,11 @@ app.get("/mylists", function(req,res){
 app.get("/list", function(req,res){
 
   var user=req.getUser();
-  var alerts = req.flash();
+  // var alerts = req.flash();
 
   if(!user) {
     console.log('not user');
-    req.flash('You must be logged in to add to My Shopping List.');
+    // req.flash('You must be logged in to add to My Shopping List.');
   }
   //SELECT COUNT(*),department,name,SUM(quantity::INTEGER) as total_qty,unit FROM ingredients WHERE "listId"=2 GROUP BY name,unit,department ORDER BY name ASC;
   else{
@@ -231,15 +220,10 @@ app.get("/list", function(req,res){
 })
 
 
-// app.get("/starlist", function(req,res){
-//   res.render("star-list");
-// })
-
-
 app.get("/my-recipes", function(req,res){
   console.log(req.getUser())
   var user=req.getUser();
-  db.favorite.findAll().then(function(foundFavorites){
+  db.favorite.findAll({where:{userId:user.id}}).then(function(foundFavorites){
     var locals={favoriteRecipes:foundFavorites}
     // res.send(locals);
     res.render("my-recipes", {favoriteRecipes:foundFavorites})
@@ -254,7 +238,7 @@ app.get("/about", function(req,res){
 //load controllers
 app.use("/recipes", recipesCtrl);
 app.use("/favorites", favoritesCtrl);
-app.use("/ingredients", ingredientsCtrl);
+
 
 app.listen(process.env.PORT || 3002,function(){
   console.log("Let's do this thing!")

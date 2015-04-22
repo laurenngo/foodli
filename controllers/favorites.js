@@ -12,7 +12,6 @@ router.use(bodyParser.urlencoded({extended:false}));
 
 //Grabs favorited recipes and renders
 
-
 router.post("/", function(req,res){
   var user=req.getUser();
   var alerts = req.flash();
@@ -20,8 +19,9 @@ router.post("/", function(req,res){
 
   if (!user) {
     console.log('not user');
-    req.flash('danger', 'You have to be logged in to access this page!');
-    // res.render('index')
+    req.flash('danger', 'Please login to access that page!');
+
+    res.render('index',{alerts:req.flash()});
  } else {
   console.log('is user');
   db.favorite.findOrCreate ({where:{recipeName:req.body.Title, source:req.body.UserName, recId:req.body.RecipeID, image:req.body.ImageURL, userId:user.id}})
@@ -44,23 +44,6 @@ router.delete("/:recId", function(req,res){
 
   console.log(req.params.RecipeID)
 })
-
-// router.delete("/")
-
-//Deletes favorite
-// router.delete("/:id", function(req,res){
-//   db.favorite.destroy({where:{imdbid:req.params.id}}).then(function(){
-//     res.send({result:true})
-//   })
-//   console.log(req.params.id)
-// })
-
-
-
-
-
-
-
 
 
 
