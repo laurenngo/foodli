@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       type:DataTypes.STRING,
       validate:{
         isEmail:{
-          args:true,
+
           msg:"Please enter a valid email address."
         }
       }

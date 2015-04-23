@@ -28,12 +28,15 @@ $(function() {
   $('.delete-item').on('click', function(e){
     e.preventDefault();
     var delBtn= $(this);
+    var tr= $(this).closest('tr')
+    var data= tr.serialize();
     if(confirm('Are you sure you want to delete this item from My Shopping List?')){
       var myUrl=$(this).parent().attr('tr');
       console.log("THIS BE URL:", myUrl)
       $.ajax({
         method:'DELETE',
         url:myUrl
+        data:data
       }).done(function(data){
 
         })
@@ -45,3 +48,30 @@ $(function() {
   })
 
 })
+
+// //Deletes ingredients from list
+
+//   $('.delete-item').on('click', function(e){
+//     e.preventDefault();
+//     var delBtn= $(this);
+//     var tr= $(this).closest('tr')
+//     if(confirm('Are you sure you want to delete this item from My Shopping List?')){
+//       var myUrl=$(this).parent().attr('tr');
+//       console.log("THIS BE URL:", myUrl)
+//       $.ajax({
+//         method:'DELETE',
+//         url:myUrl
+//       }).done(function(data){
+
+//         })
+//         $(delBtn).closest('tr').fadeOut('slow', function(){
+
+//           $(this).remove();
+//       })
+//     }
+//   })
+
+// })
+
+
+

@@ -40,7 +40,7 @@ router.post("/", function(req,res){
 
 
 router.delete("/:id", function(req,res){
-  db.ingredient.destroy({where:{ingId:req.params.ingId}}).then(function(){
+  db.ingredient.destroy({where:{id:req.params.id}}).then(function(){
     console.log({result:true})
   })
 
