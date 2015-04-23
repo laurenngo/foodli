@@ -251,16 +251,15 @@ img #bigOvenLogo {
 }
 
 div.resultText {
-  /*opacity: .5;*/
+  opacity: .6;
   font-size:20px;
   margin-top:-115px;
   /*margin-bottom:50px;*/
-  max-width:100%;
-  margin-left:10px;
+  max-width:90%;
+  margin-left:15px;
   vertical-align: middle;
   color:black;
-  /*background-color:rgba(255,255,255,1);*/
-  /*background-color:red;*/
+  background-color:rgba(255,255,255,1);
   display:block;
   text-decoration: none;
 }
@@ -272,7 +271,6 @@ div.resultText {
 }
 
 #searchResultsField {
-  /*display:inline-block;*/
   text-align:center;
 }
 
@@ -281,7 +279,6 @@ div.resultText {
   min-width:24%;
   max-width: 26%;
   margin-right:10px;
-
   min-height: 320px;
   vertical-align: bottom;
 }
@@ -293,15 +290,14 @@ div.resultText {
 a:-webkit-any-link {
   text-decoration: none;
 
-
 }
 
 .delete-button {
   opacity:0.6;
-  color:;
   float:right;
   margin-right:10px;
   margin-bottom:10px;
+  margin-top:5px;
   position:relative;
 
 }
@@ -311,6 +307,7 @@ a:-webkit-any-link {
   color:rgb(220,15,0);
   background-color:white;
   padding:2px;
+
 }
 
 .glyphicon-remove:hover {
@@ -660,3 +657,18 @@ padding-top:16px;
   margin-bottom:4px;
 }
 
+
+/*404 page*/
+
+#four {
+  background-color:white;
+  color:rgb(63,60,75);
+  width:50%;
+  opacity:0.8;
+  font-size:35px;
+  text-align:center;
+  border-radius:5px;
+  font-weight:300;
+  margin-top:60px;
+
+}

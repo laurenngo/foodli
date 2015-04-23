@@ -87,7 +87,7 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
   // check for stuff ... leave on error
   if(!user) {
    req.flash('danger', 'Please login to access that page!');
-  res.render('index', {alerts:req.flash()});
+   res.redirect(req.headers.referer);
  } else {
   // if(!user.lists) return req.flash('You do not have a list');
 
@@ -129,25 +129,26 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
       })
       console.log(newIngredients)
 
-        db.ingredient.bulkCreate(newIngredients, {hooks:true})
-        .then(function(ingredient){
-            console.log(ingredient);
-            res.redirect("/list");
-            // res.render("add-item", {ingredient:ingredient})
-           // res.send("going to ingredient page");
-        }).catch(function(err){
-          console.log("error", err);
-        })
+      db.ingredient.bulkCreate(newIngredients, {hooks:true})
+      .then(function(ingredient){
+        console.log(ingredient);
+        res.redirect("/list");
+
+      }).catch(function(err){
+        console.log("error", err);
+      })
 
 
-  } else{
-    res.send('something went wrong.');
-    console.log('error',error,response);
+    } else{
+      res.send('something went wrong.');
+      console.log('error',error,response);
+      req.flash('danger', 'Sorry, an error has occurred. Please try again!')
+      res.redirect(req.headers.referer)
+    }
   }
+  );
 }
-);
- }
-    });
+});
 
 
 

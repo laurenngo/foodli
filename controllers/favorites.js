@@ -14,14 +14,15 @@ router.use(bodyParser.urlencoded({extended:false}));
 
 router.post("/", function(req,res){
   var user=req.getUser();
-  var alerts = req.flash();
+  // var alerts = req.flash();
   res.locals.user=req.getUser();
 
   if (!user) {
     console.log('not user');
     req.flash('danger', 'Please login to access that page!');
 
-    res.render('index',{alerts:req.flash()});
+    // res.render('index',{alerts:req.flash()});
+    res.redirect(req.headers.referer)
  } else {
   console.log('is user');
   db.favorite.findOrCreate ({where:{recipeName:req.body.Title, source:req.body.UserName, recId:req.body.RecipeID, image:req.body.ImageURL, userId:user.id}})
@@ -36,6 +37,18 @@ router.post("/", function(req,res){
     })
   }
 })
+
+
+router.delete("/:id", function(req,res){
+  db.ingredient.destroy({where:{ingId:req.params.ingId}}).then(function(){
+    console.log({result:true})
+  })
+
+  console.log(req.params.id)
+})
+
+
+
 
 router.delete("/:recId", function(req,res){
   db.favorite.destroy({where:{recId:req.params.recId}}).then(function(){

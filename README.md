@@ -15,7 +15,10 @@ I used javascript for the bulk of my code, with some AJAX for delete/posting fun
 
 Oustanding issues-in-progress:
 
-- Flash/error messages
-- Stalling during load for some pages (may be related to above)
-- Validations
+- results overlay readability
+- Home page with directions
+- Delete buttons for ingredients
+- Delete-all button for ingredients?
+- Validations(?)
 - Responsive pages
+- stalling on no input for ing

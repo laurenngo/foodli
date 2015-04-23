@@ -21,11 +21,18 @@ app.use(session({
 app.use(flash());
 
 
-app.use("*",function(req,res,next){
-  var alerts = req.flash();
+app.use(function(req,res,next){
+  // var alerts = req.flash();
   res.locals.alerts=req.flash();
   next();
 })
+
+
+// app.use("*",function(req,res,next){
+//   var alerts = req.flash();
+//   res.locals.alerts=req.flash();
+//   next();
+// })
 
 //custom middleware - is user logged in
 app.use(function(req,res,next){
@@ -51,25 +58,27 @@ app.post("/ingredients/:listId/additem", function(req,res){
 
   var user=req.getUser();
   //check for stuff ... leave on error
-  // if(!user) return req.flash('success','You must be logged in to access My Recipes.');
   if(!user){
     console.log("FAIL")
+    req.flash('danger','You must be logged in to access My Shopping List.');
     res.redirect("/")
   }
-  if(!user.lists) return req.flash('danger','You do not have a list! Please contact system administrator.');
+
+  if(!user.lists) {
+    req.flash('danger','You do not have a list! Please contact system administrator.');
+    res.redirect('/')
+  }
 
   db.list.find({where:{id:user.lists[0].id}}).then(function(foundList){
-    // console.log('FOUNDLIST', foundList)
+
     var myList=user.lists.id
     db.ingredient.create({name:req.body.itemName, quantity:req.body.itemQty, unit:req.body.unit, department:req.body.itemDepartment, listId:user.lists.id}).then(function(createdItem){
       console.log(req.body)
       foundList.addIngredient(createdItem)
 
-      // console.log('CREATEDITEM', createdItem)
       res.redirect("/list")
     })
   })
-
 })
 
 
@@ -82,13 +91,14 @@ app.get('/testing',function(req,res){
 app.get("/", function(req,res){
    // var user=req.getUser();
    res.locals.user=req.getUser();
-   var alerts = req.flash();
+   // var alerts = req.flash();
    console.log(req.getUser())
   res.render("index");
 })
 
 app.post("/signup", function(req,res){
   var alerts = req.flash();
+  var user = req.getUser();
   var userSignup ={email:req.body.email,
                    username:req.body.username,
                    password:req.body.password
@@ -97,34 +107,38 @@ app.post("/signup", function(req,res){
   db.user.findOrCreate({where:{email:req.body.email}, defaults:userSignup})
   .spread(function(user,created){
      if(created){
-        // req.flash('Your account has successfully been created!');
-        console.log("SUCCESS!")
+        req.flash('success','Your account has successfully been created!');
         res.redirect("/")
+        // console.log("SUCCESS!")
+
         user.createList({listName:user.username+"'s List", userId:user.id})
         .then(function(list){
-          res.redirect("/")
+          // res.redirect("/")
         });
       } else {
-        // req.flash('The email you entered already exists. Please log-in or sign up with a different email account.');
-      console.log("FAIL")
+        req.flash('danger','The email you entered already exists. Please login or sign up with a different email account.');
+      // console.log("FAIL")
       res.redirect("/")
       }
   })
      .catch(function(error){
-      // req.flash('An error has occured:',error);
+      req.flash('An error has occured:',error);
+      res.redirect(req.headers.referer);
 
       res.send(error);
      })
 })
 
 app.post("/login", function(req,res){
+  var user = req.getUser();
   db.user.find({where:{username:req.body.username},include:[db.list]})
   .then(function(user){
     // res.send(user)
     if(user){
       bcrypt.compare(req.body.password, user.password,function(err,result){
         if(err) {throw err;}
-        // res.send(req.body.password)
+        // req.flash('danger','An error has occurred! Please try again.')
+        // res.redirect("/")
 
         if(result){
           req.session.user= {
@@ -133,18 +147,19 @@ app.post("/login", function(req,res){
             username:user.username,
             lists:user.lists
           };
-          // res.send("Logged in!")
-          // req.flash('success', 'You have been successfully logged in!');
-          // res.render('index', {alerts:req.flash()});;
+
+          req.flash('success', 'You have been successfully logged in!');
+
             res.redirect("/")
         } else {
-          // res.send("Sorry, nope!")
-          res.redirect("index")
+
+          req.flash('danger', "Sorry, your username or password did not match. Please try to login again!")
+          res.redirect(req.headers.referer)
         }
       })
     } else {
-      // res.send("Unknown user. Sign up!")
-      res.redirect("index")
+      req.flash('danger',"It looks like you don't have an account yet. Please sign up!")
+      res.redirect(req.headers.referer)
     }
   })
 
@@ -157,9 +172,9 @@ app.get('/logout',function(req,res){
     var user=req.getUser();
     delete req.session.user;
 
+    req.flash('success', 'You have been successfully logged out!')
     res.redirect('/');
 
-    // res.send('logged out');
 });
 
 //GET /restricted
@@ -178,12 +193,6 @@ app.get('/restricted',function(req,res){
 
 
 
-app.get("/mylists", function(req,res){
-  console.log(req.getUser())
-  var user=req.getUser();
-  res.render("my-lists")
-})
-
 
 app.get("/list", function(req,res){
 
@@ -192,7 +201,8 @@ app.get("/list", function(req,res){
 
   if(!user) {
     console.log('not user');
-    // req.flash('You must be logged in to add to My Shopping List.');
+    req.flash('You must be logged in to add to My Shopping List.');
+    res.redirect(req.headers.referer)
   }
   //SELECT COUNT(*),department,name,SUM(quantity::INTEGER) as total_qty,unit FROM ingredients WHERE "listId"=2 GROUP BY name,unit,department ORDER BY name ASC;
   else{
@@ -213,21 +223,26 @@ app.get("/list", function(req,res){
       ingredient:foundIngredients.map(function(i){ return i.get();}),
       user:user
     });
-
   })
-}
-
+ }
 })
 
 
 app.get("/my-recipes", function(req,res){
-  console.log(req.getUser())
   var user=req.getUser();
+  if (!user){
+    req.flash('danger', 'Please login to access that page!')
+    res.redirect("/")
+  } else {
+
+
+  console.log(req.getUser())
   db.favorite.findAll({where:{userId:user.id}}).then(function(foundFavorites){
     var locals={favoriteRecipes:foundFavorites}
-    // res.send(locals);
+
     res.render("my-recipes", {favoriteRecipes:foundFavorites})
   })
+  }
 })
 
 app.get("/about", function(req,res){
@@ -238,6 +253,10 @@ app.get("/about", function(req,res){
 //load controllers
 app.use("/recipes", recipesCtrl);
 app.use("/favorites", favoritesCtrl);
+
+app.use(function(req, res, next){
+   res.status(404).render('404');
+});
 
 
 app.listen(process.env.PORT || 3002,function(){
