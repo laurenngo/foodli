@@ -36,7 +36,7 @@ $(function() {
       $.ajax({
         method:'DELETE',
         url:myUrl
-        data:data
+        // data:data
       }).done(function(data){
 
         })
