@@ -117,12 +117,14 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
       .map(function(item){
         console.log("****************")
         console.log(user.lists);
-        console.log(item)
+        console.log('item',item)
+        console.log('iid',item.id)
         return {
           name: item.Name,
           quantity: item.Quantity,
           unit: item.Unit,
           ingId: item.IngredientID,
+          id:item.id,
           department: item.IngredientInfo.Department,
           listId: user.lists[0].id
         }
