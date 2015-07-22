@@ -3,25 +3,22 @@
 
   <h2 id="myRecipesHeader">My Recipes</h2>
 
-<div id="favoritesField">
-    <% for (i=0; i<favoriteRecipes.length; i++){ %>
-       <div class="favoriteRecipe">
-      <a class="favLink" href="/recipes/<%= favoriteRecipes[i].recId%>">
-         <!-- <div class="eachFavorite"> -->
-          <!-- <div class="eachFavoriteImage"> -->
-            <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
-          <!-- </div> -->
-          <div class="resultText">
-            <%= favoriteRecipes[i].recipeName %>
-            <%= favoriteRecipes[i].source %>
-          </div>
-          <span class = "delete-button glyphicon glyphicon-remove" input type="button"></span>
-      </a>
-       </div>
+  <div id="favoritesField">
+      <% for (i=0; i<favoriteRecipes.length; i++){ %>
+         <div class="favoriteRecipe">
+            <a class="favLink" href="/recipes/<%= favoriteRecipes[i].recId%>">
+             
+                  <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
+             
+                <div class="resultText">
+                  <%= favoriteRecipes[i].recipeName %>
+                  <%= favoriteRecipes[i].source %>
+                </div>
+                <span class = "delete-button glyphicon glyphicon-remove" input type="button"></span>
+            </a>
+         </div>
       <% } %>
-      </div>
   </div>
 </div>
 
-</div>
 <% include ./partials/footer %>
