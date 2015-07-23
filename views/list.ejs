@@ -18,19 +18,26 @@
     <% for (var i=0;i< ingredient.length;i++){ %>
 
 
+    <!-- <a href=> -->
       <tr>
 
       <td>
     <!-- <div> -->
-       <span class = "delete-item glyphicon glyphicon-ok" id= "ing-remove" input type="button"></span>
+      <!-- <form action="/favorites" method="post"> -->
+     <!-- <button type="submit" class="delete btn btn-primary btn-xs btn-block" id="delete">Delete from List</button> -->
+       <span data-list-id="<%= listId %>" data-name="<%= ingredient[i].name %>" data-unit="<%= ingredient[i].unit %>" data-department="<%= ingredient[i].department %>" class="delete-item glyphicon glyphicon-ok" class= "ing-remove" input type="button"></span>
+      <!-- </form> -->
     <!-- </div class="glyph"> -->
       <%= ingredient[i].name %></td>
       <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
       <td><%= ingredient[i].unit %></td>
       <td><%= ingredient[i].department %>
       </td>
+
+
       </tr>
     <% } %>
+      <!-- </a> -->
     </table>
 
 

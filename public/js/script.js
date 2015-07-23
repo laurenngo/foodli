@@ -28,21 +28,34 @@ $(function() {
   $('.delete-item').on('click', function(e){
     e.preventDefault();
     var delBtn= $(this);
-    var tr= $(this).closest('tr')
-    var data= tr.serialize();
+    // var form= $(this).closest('form')
+    var tr = $(this).closest('tr')
+    // var data= form.serialize();
+
+
+
     if(confirm('Are you sure you want to delete this item from My Shopping List?')){
-      var myUrl=$(this).parent().attr('tr');
-      console.log("THIS BE URL:", myUrl)
+      // var myUrl=$(this).attr('action');
+
       $.ajax({
         method:'DELETE',
-        url:myUrl
-        // data:data
+        url:'/favorites',
+        data:{
+          name:$(this).data('name'),
+          department:$(this).data('department'),
+          unit:$(this).data('unit'),
+          listId:$(this).data('list-id')
+        }
       }).done(function(data){
-
-        })
-        $(delBtn).closest('tr').fadeOut('slow', function(){
-
-          $(this).remove();
+        console.log('got response',data);
+        if(data.result){
+          $(delBtn).closest('tr').fadeOut('slow', function(){
+            $(this).remove();
+          })
+        }else{
+          alert('unable to delete item.');
+          console.log(data.error);
+        }
       })
     }
   })

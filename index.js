@@ -207,19 +207,21 @@ app.get("/list", function(req,res){
   //SELECT COUNT(*),department,name,SUM(quantity::INTEGER) as total_qty,unit FROM ingredients WHERE "listId"=2 GROUP BY name,unit,department ORDER BY name ASC;
   else{
   db.ingredient.findAll({
-    attributes:['department',
-    'name',
-    'unit',
-    [db.sequelize.fn('count','*'),'cnt'],
-    [db.sequelize.fn('sum',db.sequelize.col('quantity')),'totalqty']
+    attributes:[
+      'department',
+      'name',
+      'unit',
+      [db.sequelize.fn('count','*'),'cnt'],
+      [db.sequelize.fn('sum',db.sequelize.col('quantity')),'totalqty']
     ],
     where:{listId:user.lists[0].id},
     group:['name','unit','department'],
-    order:'department ASC'
+    order:'department ASC, name ASC'
   }).then(function(foundIngredients){
     // res.send(foundIngredients)
 
     res.render("list",{
+      listId:user.lists[0].id,
       ingredient:foundIngredients.map(function(i){ return i.get();}),
       user:user
     });

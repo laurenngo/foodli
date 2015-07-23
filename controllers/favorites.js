@@ -38,17 +38,24 @@ router.post("/", function(req,res){
   }
 })
 
-
-router.delete("/:id", function(req,res){
-  db.ingredient.destroy({where:{id:req.params.id}}).then(function(){
-    console.log({result:true})
+// DELETE route for ingredients on shopping list
+router.delete("/", function(req,res){
+  console.log('body',req.body);
+  db.ingredient.destroy({where:{
+    name:req.body.name,
+    department:req.body.department,
+    unit:req.body.unit,
+    listId:req.body.listId
+  }}).then(function(){
+    res.send({result:true});
+  }).catch(function(err){
+    res.send({result:false,error:err});
   })
-
-  console.log(req.params.id)
 })
 
 
 
+// DELETE route for favorite recipes
 
 router.delete("/:recId", function(req,res){
   db.favorite.destroy({where:{recId:req.params.recId}}).then(function(){
