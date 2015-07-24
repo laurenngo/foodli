@@ -2,8 +2,6 @@
 
  <div class="container">
 
-
-<!-- Hidden form field with Ingredient values -->
         <div id ="headers">
          <div id="showPageHeader"><%= Title %></div>
          <div id="showPoster">posted by <%= Poster.UserName %></div>
@@ -12,77 +10,78 @@
         <div class="col-md-4" id="leftPanel" >
 
           <div>
-          <form action="/favorites" id="addButton" method="POST">
-              <button class="btn addMyRecipes" name ="addRecipesBtn" type="submit"><span class="glyphicon glyphicon-heart"></span> ADD TO MY RECIPES</button>
-            </button>
-              <input type="hidden" name="Title" value="<%= Title %>">
-              <input type="hidden" name="UserName" value="<%= Poster.UserName %>">
-              <input type="hidden" name="RecipeID" value="<%= RecipeID %>">
-              <input type="hidden" name="ImageURL" value="<%= ImageURL %>">
-          </form>
-        </div>
+            <form action="/favorites" id="addButton" method="POST">
+                <button class="btn addMyRecipes" name ="addRecipesBtn" type="submit"><span class="glyphicon glyphicon-heart"></span> ADD TO MY RECIPES</button>
+                </button>
+                <input type="hidden" name="Title" value="<%= Title %>">
+                <input type="hidden" name="UserName" value="<%= Poster.UserName %>">
+                <input type="hidden" name="RecipeID" value="<%= RecipeID %>">
+                <input type="hidden" name="ImageURL" value="<%= ImageURL %>">
+            </form>
+          </div>
 
 
           <img class="showImage" src="<%= ImageURL %>">
 
 
         <%  var rating = parseInt(Math.round((StarRating))) %>
-            <h5><% for (var i = 0; i < rating; i += 1) { %>
-
-              <span id="gold"> &#9733; </span>
-              <%  } %>
-              <% for (var i = 0; i < 5-rating; i += 1) { %>
-              <span id="gray"> &#9734; </span>
-              <%  } %>
+            <h5>
+                <% for (var i = 0; i < rating; i += 1) { %>
+                  <span id="gold"> &#9733; </span>
+                <%  } %>
+                
+                <% for (var i = 0; i < 5-rating; i += 1) { %>
+                  <span id="gray"> &#9734; </span>
+                <%  } %>
               %>
             </h5>
-             <br>
-             <div id="bigOvenRating"><strong>BIGOVEN USER RATING </strong></div>
+            <br>
+            <div id="bigOvenRating">
+              <strong>
+                BIGOVEN USER RATING 
+              </strong>
+            </div>
 
 
       </div>
 
 
-
-
 <div class="col-md-4" id="desDiv">
-<!--
-  <div class="recipeDescription">
-
 
       <%= Description %>
-  </div> -->
 
-  <!-- <br> -->
+
 
   <div class="recipeInstructions">
       <%= Instructions %>
   </div>
 </div>
 
-<div class="col-md-4" id="ingredientsDiv">
+  <div class="col-md-4" id="ingredientsDiv">
 
-  <div name="ingredients" class="showIngredientList">
+    <div name="ingredients" class="showIngredientList">
 
-    <strong id="servings">MAKES <%= YieldNumber %> <%= YieldUnit %></strong>
+      <strong id="servings">MAKES <%= YieldNumber %> <%= YieldUnit %></strong>
 
 
-    <% for (var i=0;i<Ingredients.length; i++){ %>
-      <div class="eachIngredient">
+      <% for (var i=0;i<Ingredients.length; i++){ %>
+        <div class="eachIngredient">
 
-        <%= Ingredients[i].DisplayQuantity %>
-        <%= Ingredients[i].Unit %>
-        <%= Ingredients[i].Name %>
+          <%= Ingredients[i].DisplayQuantity %>
+          <%= Ingredients[i].Unit %>
+          <%= Ingredients[i].Name %>
 
-      </div>
+        </div>
 
-    <% } %>
+      <% } %>
 
+    </div>
+    
+    <a href="/recipes/mylist/add-recipe/<%=RecipeID %>" class="btn addIngredientsBtn" type="submit">
+      ADD INGREDIENTS TO MY LIST
+    </a>
+    
   </div>
-    <!-- <form method="GET"> -->
-      <a href="/recipes/mylist/add-recipe/<%=RecipeID %>" class="btn addIngredientsBtn" type="submit">ADD INGREDIENTS TO MY LIST</a>
-    <!-- </form> -->
- </div>
  </div>
 </div>
 

@@ -23,7 +23,7 @@ var data = {
     rpp:50,  //request per page
     any_kw:req.query.q
   };
-  //?pg=1&rpp=25&title_kw=taco&api_key=...
+ 
 
 
   request(
@@ -35,10 +35,10 @@ var data = {
     }
   },function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // console.log('body',body);
+    
       var searchData = JSON.parse(body);
       res.render('recipe-results',searchData);
-      // res.send(searchData)
+
     }else{
       res.send('something went wrong.');
       console.log('error',error,response);
@@ -65,11 +65,11 @@ router.get("/:RecipeID", function(req,res){
     }
   }, function(error,response,body) {
     if (!error && response.statusCode == 200) {
-            // console.log('body',body);
+
             var recipeData = JSON.parse(body);
             res.render('show',recipeData);
 
-            // res.send(recipeData)
+         
           }else{
             res.send('something went wrong.');
             console.log('error',error,response);
@@ -89,7 +89,7 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
    req.flash('danger', 'Please login to access that page!');
    res.redirect(req.headers.referer);
  } else {
-  // if(!user.lists) return req.flash('You do not have a list');
+  
 
   var recipeID = req.params.RecipeID
   var api_key= process.env.BIGOVEN_KEY;
@@ -106,7 +106,7 @@ router.get("/mylist/add-recipe/:RecipeID", function(req,res){
     if (!error && response.statusCode == 200) {
       console.log('Data was received');
       var recipeData = JSON.parse(body);
-      // console.log('HERE',body)
+
       console.log("RDATA!!", recipeData)
       console.log('INGREDIENTS',recipeData.Ingredients)
 

@@ -14,14 +14,14 @@ router.use(bodyParser.urlencoded({extended:false}));
 
 router.post("/", function(req,res){
   var user=req.getUser();
-  // var alerts = req.flash();
+ 
   res.locals.user=req.getUser();
 
   if (!user) {
     console.log('not user');
     req.flash('danger', 'Please login to access that page!');
 
-    // res.render('index',{alerts:req.flash()});
+   
     res.redirect(req.headers.referer)
  } else {
   console.log('is user');
@@ -31,7 +31,7 @@ router.post("/", function(req,res){
         console.log("HELLO" + foundEntry);
         console.log(created);
 
-        // res.send({data:foundEntry})
+      
         res.redirect("my-recipes")
       })
     })
