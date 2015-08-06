@@ -1,8 +1,9 @@
 <% include ./partials/header %>
 
-
+<!-- grocery list view page -->
 <div class="container">
 
+<!-- existing list items -->
   <div class="col-md-6">
     <div id="currentList">
 
@@ -14,26 +15,23 @@
         <th>DEPT</th>
       </tr>
 
-    <% for (var i=0;i< ingredient.length;i++){ %>
+        <% for (var i=0;i< ingredient.length;i++){ %>
 
-      <tr>
-        <td>
-         <span data-list-id="<%= listId %>" data-name="<%= ingredient[i].name %>" data-unit="<%= ingredient[i].unit %>" data-department="<%= ingredient[i].department %>" class="delete-item glyphicon glyphicon-ok" class= "ing-remove" input type="button"></span>
-     
-        <%= ingredient[i].name %></td>
-        <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
-        <td><%= ingredient[i].unit %></td>
-        <td><%= ingredient[i].department %>
-        </td>
-      </tr>
-    <% } %>
-   
-    </table>
-
-
-
+          <tr>
+            <td>
+             <span data-list-id="<%= listId %>" data-name="<%= ingredient[i].name %>" data-unit="<%= ingredient[i].unit %>" data-department="<%= ingredient[i].department %>" class="delete-item glyphicon glyphicon-ok" class= "ing-remove" input type="button"></span>
+            <%= ingredient[i].name %></td>
+            <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
+            <td><%= ingredient[i].unit %></td>
+            <td><%= ingredient[i].department %>
+            </td>
+          </tr>
+        <% } %>
+     </table>
     </div>
   </div>
+
+  <!-- add an item section -->
 
   <div class="col-md-6">
 
@@ -42,6 +40,7 @@
         <strong>ADD AN ITEM TO YOUR LIST</strong>
       </div>
 
+      <!-- start of form -->
         <form action="ingredients/<%= user.lists[0].id%>/additem" method="POST">
 
         <label class="addFormLabel">ITEM NAME</label>
@@ -65,14 +64,10 @@
             <option value="ml">Ml</option>
           </select>
 
-
         <button class="btn ingredientSubmit" type="submit">ADD TO LIST!</button>
-
       </form>
 
     </div>
-
-
   </div>
 </div>
 <% include ./partials/footer %>

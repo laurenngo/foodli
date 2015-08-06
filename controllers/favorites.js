@@ -11,17 +11,13 @@ router.use(bodyParser.urlencoded({extended:false}));
 
 
 //Grabs favorited recipes and renders
-
 router.post("/", function(req,res){
   var user=req.getUser();
- 
   res.locals.user=req.getUser();
 
   if (!user) {
     console.log('not user');
     req.flash('danger', 'Please login to access that page!');
-
-   
     res.redirect(req.headers.referer)
  } else {
   console.log('is user');
@@ -30,8 +26,6 @@ router.post("/", function(req,res){
       foundEntry.save().then(function(){
         console.log("HELLO" + foundEntry);
         console.log(created);
-
-      
         res.redirect("my-recipes")
       })
     })
@@ -53,18 +47,12 @@ router.delete("/", function(req,res){
   })
 })
 
-
-
 // DELETE route for favorite recipes
-
 router.delete("/:recId", function(req,res){
   db.favorite.destroy({where:{recId:req.params.recId}}).then(function(){
     console.log({result:true})
   })
-
   console.log(req.params.RecipeID)
 })
-
-
 
 module.exports = router;

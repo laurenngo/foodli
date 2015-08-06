@@ -13,12 +13,11 @@
 
 </head>
 
-
+<!-- navbar -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <a class="navbar-brand" href="/">food&ltli&gt </a>
   <ul class="nav navbar-nav">
     <li class="active">
-     <!--  <a href="/">Home</a> -->
     </li>
       <% if (user){ %>
     <li>
@@ -29,37 +28,27 @@
     </li>
       <% } %>
 
-  <!--   <li>
-      <a href="/starlist" class="navText">Starred Ingredients</a>
-    </li> -->
     <li id="navSearch">
       <form class="form" action="/recipes/search" id ="navSearch" method="GET">
-
-    <!-- <div class="form-group"> -->
-
-      Search
-      <input type="text" id="navSearchInput" name="q" placeholder="Search for a recipe!">
-    <!-- </div> -->
-
-    <button type="submit" id = "navSearchBtn" class="btn">Submit</button>
-  </form>
+        Search
+        <input type="text" id="navSearchInput" name="q" placeholder="Search for a recipe!">
+        <button type="submit" id = "navSearchBtn" class="btn">Submit</button>
+      </form>
     </li>
   </ul>
   <div class="loginDiv">
 
+<!-- button logic for login/signup vs logout -->
     <% if (user){ %>
-
-
     <a href="/logout" class="btn" id="logoutBtn">
       LogOut
     </a>
     <% } else { %>
     <button class="btn signupBtn" data-toggle="modal" data-target="#signupModal">Sign Up</button>
-
     <button class="btn loginBtn" data-toggle="modal" data-target="#loginModal">LogIn</button>
     <% } %>
-
   </div>
+
 </nav>
 
 <!-- Sign Up Modal -->
@@ -68,21 +57,19 @@
   <div class="modal-dialog">
     <div class="modal-content">
      <form action="/signup" method="post" class="form">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">SIGN UP FOR AN ACCOUNT</h4>
-      </div>
-      <div class="modal-body">
-        <!-- ... -->
-        <label class="formLabel">USERNAME</label>
-        <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
-        <label class="formLabel">E-MAIL</label>
-        <input type="text" class="form-control" id="usernameBox" name="email" placeholder="Enter your e-mail here.">
-        <label class="formLabel">PASSWORD</label>
-        <input type="password" class="form-control" id="usernameBox" name="password" placeholder="Enter a password here.">
-      </div>
-      <div class="modal-footer">
-       <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">SIGN UP FOR AN ACCOUNT</h4>
+        </div>
+        <div class="modal-body">
+          <label class="formLabel">USERNAME</label>
+          <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
+          <label class="formLabel">E-MAIL</label>
+          <input type="text" class="form-control" id="usernameBox" name="email" placeholder="Enter your e-mail here.">
+          <label class="formLabel">PASSWORD</label>
+          <input type="password" class="form-control" id="usernameBox" name="password" placeholder="Enter a password here.">
+        </div>
+        <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Sign Up!</button>
       </div>
      </form>
@@ -100,25 +87,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">LOG IN TO YOUR ACCOUNT</h4>
       </div>
-      <div class="modal-body">
-        <!-- ... -->
-        <label class="formLabel">USERNAME</label>
-        <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
-        <label class="formLabel">PASSWORD</label>
-        <input type="password" class="form-control" id="usernameBox" name="password" placeholder="Enter your password here.">
-
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-        <button type="submit" class="btn btn-primary">Login!</button>
-      </div>
+        <div class="modal-body">
+          <label class="formLabel">USERNAME</label>
+          <input type="text" class="form-control" id="usernameBox" name="username" placeholder="Enter your username here.">
+          <label class="formLabel">PASSWORD</label>
+          <input type="password" class="form-control" id="usernameBox" name="password" placeholder="Enter your password here.">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Login!</button>
+        </div>
      </form>
     </div>
   </div>
 </div>
 
 <span><% include ./alert %></span>
-
-
 
 <body>

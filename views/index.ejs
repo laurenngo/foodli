@@ -10,14 +10,13 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="/js/script.js"></script>
-
 </head>
 
+<!-- navbar -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <a class="navbar-brand" href="/">food&ltli&gt </a>
   <ul class="nav navbar-nav">
     <li class="active">
-    
     </li>
      <% if (user){ %>
     <li>
@@ -27,8 +26,8 @@
       <a href="/my-recipes" class="navText">My Recipes</a>
     </li>
       <% } %>
- 
   </ul>
+
   <div class="loginDiv navbar-right">
     <% if (user){ %>
     <a href="/logout" class="btn" id="logoutBtn">
@@ -39,8 +38,6 @@
 
     <button class="btn" id="loginBtn" data-toggle="modal" data-target="#loginModal">LogIn</button>
     <% } %>
-
-
   </div>
 </nav>
 
@@ -97,49 +94,42 @@
   </div>
 </div>
 
+<!-- alerts -->
 <div class="container">
   <span><% include ./partials/alert %><span>
 </div>
 
+
+<!-- home page -->
 <body id="homePageDiv">
 
-<div class="container" id="homePageDiv">
- <div id="mainElements">
+  <div class="container" id="homePageDiv">
+   <div id="mainElements">
 
-
-  <form class="form" action="/recipes/search" id ="homeSearch" method="GET">
-
-    <div class="form-group">
-      <div id="searchText">SEARCH FOR A RECIPE</div>
-      <input type="text" class="form-control" id="homeSearchBox" name="q" placeholder="Search">
-    </div>
-
-    <button type="submit" id = "homeSearchButton" class="btn btn-primary">Submit</button>
-  </form>
-
-
- </div>
-</div>
+   <!-- search form -->
+    <form class="form" action="/recipes/search" id ="homeSearch" method="GET">
+      <div class="form-group">
+        <div id="searchText">SEARCH FOR A RECIPE</div>
+        <input type="text" class="form-control" id="homeSearchBox" name="q" placeholder="Search">
+      </div>
+      <button type="submit" id = "homeSearchButton" class="btn btn-primary">Submit</button>
+    </form>
+   </div>
+  </div>
 
 </body>
 
 <footer>
-
-
-<div class="container">
-
-  <div id="footerTextHome">
-    <a href="/about">About | Contact</a>
-    <div class="copy">&copy Lauren Go</div>
+  <!-- copyright -->
+  <div class="container">
+    <div id="footerTextHome">
+      <a href="/about">About | Contact</a>
+      <div class="copy">&copy Lauren Go</div>
+    </div>
   </div>
-
-</div>
-
-
-
 </footer>
 
-
+<!-- big oven citation -->
   <div id="bigOven">
     POWERED BY <img id="bigOvenLogo" src="http://mda.bigoven.com/images/logos/BigOven_logo_rgb321x90.png">
   </div>

@@ -1,7 +1,7 @@
 # foodli
 WDI Seattle 02 Project One
 
-Title: food<li>
+Title: food&ltli&gt
 
 Technologies: Javascript, AJAX, sequelize, postgreSQL, Bootstrap, HTML5, CSS3, bcrypt
 

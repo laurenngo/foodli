@@ -1,11 +1,11 @@
 <% include ./partials/header %>
-<div class="container">
 
+<!-- recipe search results -->
+<div class="container">
 
   <h2 id="resultsHeader">We found <%= ResultCount %> recipes matching your search:</h2>
 
   <div id="searchResultsField">
-
 
     <% for (var i=0; i < Results.length; i++){ %>
       <a href="/recipes/<%= Results[i].RecipeID%>">
@@ -19,12 +19,7 @@
         </div>
       </a>
      <% } %>
-
   </div>
-
 </div>
-
-
-
 
 <% include ./partials/footer %>
