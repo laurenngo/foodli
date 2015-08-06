@@ -1,5 +1,6 @@
 <% include ./partials/header %>
 
+<!-- recipe show page -->
  <div class="container">
 
         <div id ="headers">
@@ -20,10 +21,9 @@
             </form>
           </div>
 
-
           <img class="showImage" src="<%= ImageURL %>">
 
-
+          <!-- star rating logic -->
         <%  var rating = parseInt(Math.round((StarRating))) %>
             <h5>
                 <% for (var i = 0; i < rating; i += 1) { %>
@@ -41,8 +41,6 @@
                 BIGOVEN USER RATING 
               </strong>
             </div>
-
-
       </div>
 
 
@@ -50,33 +48,27 @@
 
       <%= Description %>
 
-
-
   <div class="recipeInstructions">
       <%= Instructions %>
   </div>
 </div>
 
+<!-- recipe ingredients section -->
   <div class="col-md-4" id="ingredientsDiv">
 
     <div name="ingredients" class="showIngredientList">
 
       <strong id="servings">MAKES <%= YieldNumber %> <%= YieldUnit %></strong>
 
-
       <% for (var i=0;i<Ingredients.length; i++){ %>
         <div class="eachIngredient">
-
           <%= Ingredients[i].DisplayQuantity %>
           <%= Ingredients[i].Unit %>
           <%= Ingredients[i].Name %>
-
         </div>
-
       <% } %>
 
     </div>
-    
     <a href="/recipes/mylist/add-recipe/<%=RecipeID %>" class="btn addIngredientsBtn" type="submit">
       ADD INGREDIENTS TO MY LIST
     </a>
@@ -84,6 +76,5 @@
   </div>
  </div>
 </div>
-
 
 <% include ./partials/footer %>
