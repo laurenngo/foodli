@@ -1,15 +1,13 @@
+<!-- favorite recipes page -->
 <% include ./partials/header %>
 <div class="container">
 
   <h2 id="myRecipesHeader">My Recipes</h2>
-
   <div id="favoritesField">
       <% for (i=0; i<favoriteRecipes.length; i++){ %>
          <div class="favoriteRecipe">
             <a class="favLink" href="/recipes/<%= favoriteRecipes[i].recId%>">
-             
                   <img class="myRecipesImage" src= "<%= favoriteRecipes[i].image %>">
-             
                 <div class="resultText">
                   <%= favoriteRecipes[i].recipeName %>
                   <%= favoriteRecipes[i].source %>
