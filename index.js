@@ -8,7 +8,6 @@ var app = express();
 var flash = require('connect-flash');
 var db=require("./models");
 
-
 //load middleware
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -20,19 +19,12 @@ app.use(session({
 }));
 app.use(flash());
 
-
+// flash alerts
 app.use(function(req,res,next){
   // var alerts = req.flash();
   res.locals.alerts=req.flash();
   next();
 })
-
-
-// app.use("*",function(req,res,next){
-//   var alerts = req.flash();
-//   res.locals.alerts=req.flash();
-//   next();
-// })
 
 //custom middleware - is user logged in
 app.use(function(req,res,next){
@@ -46,7 +38,7 @@ app.use(function(req,res,next){
   next();
 })
 
-
+// current user
 app.get('*', function(req,res,next){
   res.locals.user=req.getUser();
   next();
@@ -63,31 +55,22 @@ app.post("/ingredients/:listId/additem", function(req,res){
     req.flash('danger','You must be logged in to access My Shopping List.');
     res.redirect("/")
   }
-
   if(!user.lists) {
     req.flash('danger','You do not have a list! Please contact system administrator.');
     res.redirect('/')
   }
 
   db.list.find({where:{id:user.lists[0].id}}).then(function(foundList){
-
     var myList=user.lists.id
     db.ingredient.create({name:req.body.itemName, quantity:req.body.itemQty, unit:req.body.unit, department:req.body.itemDepartment, listId:user.lists.id}).then(function(createdItem){
       console.log(req.body)
       foundList.addIngredient(createdItem)
-
       res.redirect("/list")
     })
   })
 })
 
-
-app.get('/testing',function(req,res){
-  var user = req.getUser();
-
-  res.send(user);
-});
-
+// home route
 app.get("/", function(req,res){
    // var user=req.getUser();
    res.locals.user=req.getUser();
@@ -96,6 +79,7 @@ app.get("/", function(req,res){
   res.render("index");
 })
 
+// signup route
 app.post("/signup", function(req,res){
   var alerts = req.flash();
   var user = req.getUser();
@@ -109,37 +93,29 @@ app.post("/signup", function(req,res){
      if(created){
         req.flash('success','Your account has successfully been created!');
         res.redirect("/")
-        // console.log("SUCCESS!")
-
         user.createList({listName:user.username+"'s List", userId:user.id})
         .then(function(list){
-          // res.redirect("/")
         });
       } else {
         req.flash('danger','The email you entered already exists. Please login or sign up with a different email account.');
-      // console.log("FAIL")
       res.redirect("/")
       }
   })
      .catch(function(error){
       req.flash('An error has occured:',error);
       res.redirect(req.headers.referer);
-
       res.send(error);
      })
 })
 
+// login route
 app.post("/login", function(req,res){
   var user = req.getUser();
   db.user.find({where:{username:req.body.username},include:[db.list]})
   .then(function(user){
-    // res.send(user)
     if(user){
       bcrypt.compare(req.body.password, user.password,function(err,result){
         if(err) {throw err;}
-        // req.flash('danger','An error has occurred! Please try again.')
-        // res.redirect("/")
-
         if(result){
           req.session.user= {
             id:user.id,
@@ -147,12 +123,9 @@ app.post("/login", function(req,res){
             username:user.username,
             lists:user.lists
           };
-
           req.flash('success', 'You have been successfully logged in!');
-
             res.redirect("/")
         } else {
-
           req.flash('danger', "Sorry, your username or password did not match. Please try to login again!")
           res.redirect(req.headers.referer)
         }
@@ -162,8 +135,6 @@ app.post("/login", function(req,res){
       res.redirect(req.headers.referer)
     }
   })
-
-// res.send(req.body.password)
 })
 
 //GET /auth/logout
@@ -181,24 +152,16 @@ app.get('/logout',function(req,res){
 //an example restricted page
 app.get('/restricted',function(req,res){
   if(req.getUser()){
-    // res.render('main/restricted');
-    // res.send(req.getUser)
     res.send("Working!")
   } else {
-    // req.flash('You must be logged in to access this page. Please log-in!');
-    // res.redirect('/');
     res.send("Error")
   }
 });
 
-
-
-
+// grocery list route
 app.get("/list", function(req,res){
 
   var user=req.getUser();
-  // var alerts = req.flash();
-
   if(!user) {
     console.log('not user');
     req.flash('You must be logged in to add to My Shopping List.');
@@ -219,7 +182,6 @@ app.get("/list", function(req,res){
     order:'department ASC, name ASC'
   }).then(function(foundIngredients){
     // res.send(foundIngredients)
-
     res.render("list",{
       listId:user.lists[0].id,
       ingredient:foundIngredients.map(function(i){ return i.get();}),
@@ -229,24 +191,22 @@ app.get("/list", function(req,res){
  }
 })
 
-
+// favorite recipes route
 app.get("/my-recipes", function(req,res){
   var user=req.getUser();
   if (!user){
     req.flash('danger', 'Please login to access that page!')
     res.redirect("/")
   } else {
-
-
   console.log(req.getUser())
   db.favorite.findAll({where:{userId:user.id}}).then(function(foundFavorites){
     var locals={favoriteRecipes:foundFavorites}
-
     res.render("my-recipes", {favoriteRecipes:foundFavorites})
   })
   }
 })
 
+// about page route
 app.get("/about", function(req,res){
   var user=req.getUser();
   res.render("about-contact")
@@ -256,6 +216,7 @@ app.get("/about", function(req,res){
 app.use("/recipes", recipesCtrl);
 app.use("/favorites", favoritesCtrl);
 
+// 404 route
 app.use(function(req, res, next){
    res.status(404).render('404');
 });
