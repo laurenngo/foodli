@@ -1,11 +1,9 @@
+<!-- grocery list view -->
 <% include ./partials/header %>
-
-
 <div class="container">
-
+<!-- existing grocery items for user -->
   <div class="col-md-6">
     <div id="currentList">
-
       <table class="table">
       <tr>
         <th>ITEM</th>
@@ -14,38 +12,29 @@
         <th>DEPT</th>
       </tr>
 
-    <% for (var i=0;i< ingredient.length;i++){ %>
-
-    <!-- <a href=> -->
-      <tr>
-
-        <td>
-         <span data-list-id="<%= listId %>" data-name="<%= ingredient[i].name %>" data-unit="<%= ingredient[i].unit %>" data-department="<%= ingredient[i].department %>" class="delete-item glyphicon glyphicon-ok" class= "ing-remove" input type="button"></span>
-
-        <%= ingredient[i].name %></td>
-        <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
-        <td><%= ingredient[i].unit %></td>
-        <td><%= ingredient[i].department %>
-        </td>
-      </tr>
-    <% } %>
-
+        <% for (var i=0;i< ingredient.length;i++){ %>
+          <tr>
+            <td>
+             <span data-list-id="<%= listId %>" data-name="<%= ingredient[i].name %>" data-unit="<%= ingredient[i].unit %>" data-department="<%= ingredient[i].department %>" class="delete-item glyphicon glyphicon-ok" class= "ing-remove" input type="button"></span>
+            <%= ingredient[i].name %></td>
+            <td><%= parseFloat(ingredient[i].totalqty).toFixed(2) %></td>
+            <td><%= ingredient[i].unit %></td>
+            <td><%= ingredient[i].department %>
+            </td>
+          </tr>
+        <% } %>
     </table>
-
-
-
     </div>
   </div>
 
+<!-- add an item section -->
   <div class="col-md-6">
 
     <div class="addItemForm">
       <div class="addItemHeader">
         <strong>ADD AN ITEM TO YOUR LIST</strong>
       </div>
-
-        <form action="ingredients/<%= user.lists[0].id%>/additem" method="POST">
-
+       <form action="ingredients/<%= user.lists[0].id%>/additem" method="POST">
         <label class="addFormLabel">ITEM NAME</label>
         <input type="text" class="form-control addFormBox" id="usernameBox" name="itemName" placeholder="Enter an item here.">
         <label class="addFormLabel">DEPARTMENT</label>
@@ -67,14 +56,10 @@
             <option value="ml">Ml</option>
           </select>
 
-
         <button class="btn ingredientSubmit" type="submit">ADD TO LIST!</button>
-
       </form>
 
     </div>
-
-
   </div>
 </div>
 <% include ./partials/footer %>
